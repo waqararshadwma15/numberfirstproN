@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { Check, ArrowRight } from "lucide-react";
-import type { Dict, Locale } from "@/lib/i18n";
+import { enquireHref, type Dict, type Locale } from "@/lib/i18n";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 type Props = { lang: Locale; t: Dict["accounting"]["packages"] };
@@ -104,7 +104,7 @@ export function PackagesSelector({ lang, t }: Props) {
                   ))}
                 </ul>
                 <Link
-                  href={`/${lang}/enquire?path=accounting&plan=${p.key}`}
+                  href={enquireHref(lang, `?path=accounting&plan=${p.key}`)}
                   className={`btn mt-auto w-full !min-h-12 ${isMatch ? "btn-gold" : "btn-line"}`}
                 >
                   {t.choose} {p.name}

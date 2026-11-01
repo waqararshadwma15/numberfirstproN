@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getDictionary, hasLocale } from "@/lib/i18n";
+import { enquireHref, getDictionary, hasLocale } from "@/lib/i18n";
 import { PathHero } from "@/components/sections/PathHero";
 import { ForecastChart } from "@/components/advisory/ForecastChart";
 import { AdvisoryServices } from "@/components/advisory/AdvisoryServices";
@@ -32,7 +32,7 @@ export default async function AdvisoryPage({ params }: PageProps<"/[lang]/adviso
         lines={[t.hero.titleA, t.hero.titleB]}
         lead={t.hero.lead}
         tone="teal"
-        primary={{ href: `/${lang}/enquire?path=advisory`, label: common.cta.assessment }}
+        primary={{ href: enquireHref(lang, "?path=advisory"), label: common.cta.assessment }}
         secondary={{ href: "#industries", label: t.industries.label }}
         visual={<ForecastChart t={t.chart} />}
       />

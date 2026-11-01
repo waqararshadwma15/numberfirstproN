@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Mail, Phone } from "lucide-react";
-import type { Dict, Locale } from "@/lib/i18n";
+import { enquireHref, type Dict, type Locale } from "@/lib/i18n";
 import { site, waLink } from "@/lib/site";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
@@ -35,7 +35,7 @@ export function CtaBand({ lang, common, title, lead, path }: Props) {
               </h2>
               <p className="lead">{lead}</p>
               <div className="mt-8 flex flex-col gap-3 xs:flex-row xs:flex-wrap">
-                <Link href={`/${lang}/enquire${query}`} className={`btn ${teal ? "btn-teal" : "btn-gold"}`}>
+                <Link href={enquireHref(lang, query)} className={`btn ${teal ? "btn-teal" : "btn-gold"}`}>
                   {common.cta.assessment}
                   <ArrowRight size={18} className="arrow" />
                 </Link>

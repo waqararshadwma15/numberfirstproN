@@ -8,6 +8,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { MotionRoot } from "@/components/motion/MotionRoot";
+import { ScrollReset } from "@/components/layout/ScrollReset";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationGraph } from "@/lib/seo";
 
@@ -98,6 +99,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         <main id="main">{children}</main>
         <Footer lang={lang} t={t.common} />
         <WhatsAppFloat label={t.common.cta.whatsapp} />
+        <ScrollReset />
         <MotionRoot />
         <JsonLd data={organizationGraph(lang)} />
       </body>

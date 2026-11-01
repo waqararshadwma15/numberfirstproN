@@ -11,3 +11,6 @@ export const getDictionary = (lang: Locale): Dict => dictionaries[lang];
 
 /** Build a locale-prefixed href, e.g. href("ar", "/accounting") -> "/ar/accounting". */
 export const href = (lang: Locale, path = "") => `/${lang}${path}`;
+
+/** Free-assessment link: lands on the form itself (#form), optionally pre-filled via query. */
+export const enquireHref = (lang: Locale, query = "") => `/${lang}/enquire${query}#form`;

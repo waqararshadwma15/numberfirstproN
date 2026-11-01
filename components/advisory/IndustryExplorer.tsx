@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { ArrowRight, Briefcase, Building2, Dumbbell, Hotel, Palette, UtensilsCrossed, type LucideIcon } from "lucide-react";
-import type { Dict, Locale } from "@/lib/i18n";
+import { enquireHref, type Dict, type Locale } from "@/lib/i18n";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 const icons: Record<string, LucideIcon> = {
@@ -127,7 +127,7 @@ export function IndustryExplorer({ lang, t, cta }: Props) {
                     ))}
                   </ul>
                   <div data-panel-in className="mt-auto pt-10">
-                    <Link href={`/${lang}/enquire?path=advisory&industry=${item.key}`} className="btn btn-teal">
+                    <Link href={enquireHref(lang, `?path=advisory&industry=${item.key}`)} className="btn btn-teal">
                       {cta}
                       <ArrowRight size={18} className="arrow" />
                     </Link>

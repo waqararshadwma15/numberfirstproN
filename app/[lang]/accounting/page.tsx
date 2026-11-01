@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BookOpenCheck, Receipt, Users, FileSpreadsheet } from "lucide-react";
-import { getDictionary, hasLocale } from "@/lib/i18n";
+import { enquireHref, getDictionary, hasLocale } from "@/lib/i18n";
 import { PathHero } from "@/components/sections/PathHero";
 import { MonthlyCloseCard } from "@/components/accounting/MonthlyCloseCard";
 import { ComplianceGrid } from "@/components/accounting/ComplianceGrid";
@@ -35,7 +35,7 @@ export default async function AccountingPage({ params }: PageProps<"/[lang]/acco
         lines={[t.hero.titleA, t.hero.titleB, t.hero.titleC]}
         lead={t.hero.lead}
         tone="gold"
-        primary={{ href: `/${lang}/enquire?path=accounting`, label: common.cta.assessment }}
+        primary={{ href: enquireHref(lang, "?path=accounting"), label: common.cta.assessment }}
         secondary={{ href: "#packages", label: common.cta.packages }}
         visual={<MonthlyCloseCard t={t.checklist} />}
       />

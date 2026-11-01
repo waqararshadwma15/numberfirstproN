@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X, ArrowRight } from "lucide-react";
-import type { Dict, Locale } from "@/lib/i18n";
+import { enquireHref, type Dict, type Locale } from "@/lib/i18n";
 import { gsap, ScrollTrigger, useGSAP, REDUCED } from "@/lib/gsap";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -126,7 +126,7 @@ export function Header({ lang, t }: Props) {
         >
           {t.switchLang}
         </Link>
-        <Link href={`/${lang}/enquire`} className="btn btn-gold !hidden !min-h-11 !py-2.5 text-sm whitespace-nowrap lg:!inline-flex">
+        <Link href={enquireHref(lang)} className="btn btn-gold !hidden !min-h-11 !py-2.5 text-sm whitespace-nowrap lg:!inline-flex">
           {t.cta.assessmentShort}
         </Link>
         <button
@@ -164,7 +164,7 @@ export function Header({ lang, t }: Props) {
             {l.dot && <span className={`size-2 rounded-full ${l.dot}`} aria-hidden />}
           </Link>
         ))}
-        <Link href={`/${lang}/enquire`} data-item onClick={() => setOpen(false)} className="btn btn-gold mt-6 w-full">
+        <Link href={enquireHref(lang)} data-item onClick={() => setOpen(false)} className="btn btn-gold mt-6 w-full">
           {t.cta.assessment}
           <ArrowRight size={18} className="arrow" />
         </Link>

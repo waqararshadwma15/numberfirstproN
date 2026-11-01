@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Dict, Locale } from "@/lib/i18n";
+import { enquireHref, type Dict, type Locale } from "@/lib/i18n";
 import { site, waLink } from "@/lib/site";
 
 export function Footer({ lang, t }: { lang: Locale; t: Dict["common"] }) {
@@ -36,7 +36,7 @@ export function Footer({ lang, t }: { lang: Locale; t: Dict["common"] }) {
               </Link>
             </li>
             <li>
-              <Link href={`/${lang}/enquire`} className="hover:text-gold">
+              <Link href={enquireHref(lang)} className="hover:text-gold">
                 {t.cta.assessment}
               </Link>
             </li>

@@ -80,7 +80,7 @@ export default async function EnquirePage({ params }: PageProps<"/[lang]/enquire
           </div>
         </div>
 
-        <div data-intro>
+        <div id="form" data-intro className="scroll-mt-[calc(var(--nav-h)+16px)]">
           <Suspense fallback={<div className="card min-h-[560px] animate-pulse" />}>
             <EnquiryForm t={t} industryKeys={industryKeys} />
           </Suspense>
