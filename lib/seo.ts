@@ -13,7 +13,7 @@ const ogLocale = (lang: Locale) => (lang === "ar" ? "ar_SA" : "en_US");
 export function pageMetadata(lang: Locale, path: string, title: string, description: string): Metadata {
   const url = `/${lang}${path}`;
   // Pages that set openGraph don't inherit the segment's generated image, so reference it explicitly.
-  const image = { url: `/${lang}/opengraph-image`, width: 1200, height: 630, alt: `${site.name} — ${title}` };
+  const image = { url: `/${lang}/opengraph-image`, width: 1200, height: 630, alt: title };
   return {
     title,
     description,
@@ -55,9 +55,20 @@ export function organizationGraph(lang: Locale) {
         description: t.meta.siteDescription,
         telephone: site.phone,
         email: site.email,
+        slogan: `${t.home.hero.titleA} ${t.home.hero.titleB}`,
         priceRange: "SAR 1,000 - SAR 5,000 per month",
         currenciesAccepted: "SAR",
+        address: { "@type": "PostalAddress", addressCountry: site.country },
         areaServed: { "@type": "Country", name: "Saudi Arabia" },
+        ...(site.sameAs.length > 0 && { sameAs: site.sameAs }),
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: t.common.footer.solutions,
+          itemListElement: [
+            { "@type": "Offer", itemOffered: { "@id": `${site.url}/${lang}/accounting#service` } },
+            { "@type": "Offer", itemOffered: { "@id": `${site.url}/${lang}/advisory#service` } },
+          ],
+        },
         knowsLanguage: ["en", "ar"],
         knowsAbout: [
           "Bookkeeping",
@@ -94,13 +105,47 @@ export function organizationGraph(lang: Locale) {
   };
 }
 
+/* Content date for WebPage nodes; keep in step with LAST_UPDATED in app/sitemap.ts. */
+const DATE_MODIFIED = "2026-11-01";
+
+/**
+ * The page itself, tied to the site and the business. Answer engines read `about`, `mainEntity`
+ * and `dateModified` to decide what a page answers, for whom, and how fresh it is.
+ */
+export function webPage(
+  lang: Locale,
+  path: string,
+  name: string,
+  description: string,
+  opts: { type?: "WebPage" | "ContactPage" | "AboutPage"; mainEntity?: string; breadcrumb?: boolean } = {},
+) {
+  const url = `${site.url}/${lang}${path}`;
+  return {
+    "@type": opts.type ?? "WebPage",
+    "@id": `${url}#webpage`,
+    url,
+    name,
+    description,
+    inLanguage: lang,
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
+    primaryImageOfPage: { "@type": "ImageObject", url: `${site.url}/${lang}/opengraph-image`, width: 1200, height: 630 },
+    dateModified: DATE_MODIFIED,
+    ...(opts.mainEntity && { mainEntity: { "@id": opts.mainEntity } }),
+    ...(opts.breadcrumb && { breadcrumb: { "@id": `${url}#breadcrumb` } }),
+  };
+}
+
 type Crumb = { name: string; path: string };
 
 export function breadcrumbs(lang: Locale, trail: Crumb[]) {
   const home = getDictionary(lang).common.nav.home;
   const items = [{ name: home, path: "" }, ...trail];
+  const last = items[items.length - 1].path;
   return {
     "@type": "BreadcrumbList",
+    "@id": `${site.url}/${lang}${last}#breadcrumb`,
     itemListElement: items.map((c, i) => ({
       "@type": "ListItem",
       position: i + 1,

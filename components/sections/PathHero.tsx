@@ -26,15 +26,19 @@ export function PathHero({ index, label, lines, lead, tone, primary, secondary, 
       />
       <HeroIntro className="wrap relative grid items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
         <div>
-          <p data-intro className={`eyebrow ${gold ? "" : "eyebrow-teal"}`}>
-            <span className="tabular-nums">{index}</span> · {label}
-          </p>
-          <h1 data-split className="mt-6 text-[clamp(46px,7.4vw,96px)] leading-[0.98] rtl:leading-[1.25]">
-            {lines.map((line, i) => (
-              <span key={line} className={`block ${i === lines.length - 1 ? (gold ? "text-gold italic" : "text-teal italic") : ""}`}>
-                {line}
-              </span>
-            ))}
+          {/* The service name sits inside the h1 so the main heading carries the search phrase,
+              while the headline keeps its look and entrance animation. */}
+          <h1>
+            <span data-intro className={`eyebrow leading-[1.65] ${gold ? "" : "eyebrow-teal"}`}>
+              <span className="tabular-nums">{index}</span> · {label}
+            </span>{" "}
+            <span data-split className="mt-6 block text-[clamp(46px,7.4vw,96px)] leading-[0.98] rtl:leading-[1.25]">
+              {lines.map((line, i) => (
+                <span key={line} className={`block ${i === lines.length - 1 ? (gold ? "text-gold italic" : "text-teal italic") : ""}`}>
+                  {line}{" "}
+                </span>
+              ))}
+            </span>
           </h1>
           <p data-intro className="lead !mt-7">
             {lead}

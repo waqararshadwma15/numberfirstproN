@@ -42,6 +42,13 @@ Sports & Fitness; Real Estate; Food & Beverage (F&B); Hospitality; Consultancy; 
 
 Profitability by branch, a detailed monthly P&L with every cost line and margin, and a conclusion with recommended actions.
 
+## Saudi compliance quick facts (as answered on the site)
+
+- VAT registration is mandatory above SAR 375,000 of taxable supplies in 12 months; voluntary above SAR 187,500; standard rate 15%
+- VAT returns are monthly for annual taxable supplies above SAR 40 million, otherwise quarterly; due by the last day of the month after the period
+- The annual Zakat return is filed with ZATCA within 120 days of the financial year-end
+- ZATCA e-invoicing: Phase 1 (Generation) since 4 December 2021; Phase 2 (Integration with the Fatoora platform) rolled out in waves, with at least six months' notice from ZATCA
+
 ## Sectors served
 
 Healthcare; Retail and e-commerce; Hospitality; Food and beverage; Sports and fitness; Consulting; Design and workspaces.
@@ -52,4 +59,13 @@ Healthcare; Retail and e-commerce; Hospitality; Food and beverage; Sports and fi
 - [Accounting & Bookkeeping](https://numberfirst.pro/en/accounting): services, Saudi compliance, packages and FAQ
 - [Financial Planning & Advisory](https://numberfirst.pro/en/advisory): services, industry expertise, sample report and FAQ
 - [Free assessment](https://numberfirst.pro/en/enquire): request a free review of your books
-- [Arabic site](https://numberfirst.pro/ar)
+- [Arabic home](https://numberfirst.pro/ar): الرئيسية
+- [Arabic: Accounting & Bookkeeping](https://numberfirst.pro/ar/accounting): المحاسبة ومسك الدفاتر
+- [Arabic: Financial Planning & Advisory](https://numberfirst.pro/ar/advisory): التخطيط والاستشارات المالية
+- [Arabic: Free assessment](https://numberfirst.pro/ar/enquire): التقييم المجاني
+
+## Optional
+
+- [Sitemap](https://numberfirst.pro/sitemap.xml)
+
+Last updated: 2026-11-01

@@ -14,11 +14,14 @@ export function HomeHero({ lang, t, common }: { lang: Locale; t: Dict["home"]; c
       <HeroIntro className="wrap relative">
         <div className="grid items-center gap-10 lg:grid-cols-[1.25fr_1fr]">
           <div>
-            <p data-intro className="eyebrow">
-              {t.hero.label}
-            </p>
-            <h1 data-split className="mt-6 text-[clamp(52px,8.6vw,112px)] leading-[0.95] font-semibold rtl:leading-[1.2]">
-              {t.hero.titleA} <em className="text-gold italic font-medium">{t.hero.titleB}</em>
+            {/* The eyebrow sits inside the h1 so the main heading names the service, not just the slogan. */}
+            <h1>
+              <span data-intro className="eyebrow leading-[1.65]">
+                {t.hero.label}
+              </span>{" "}
+              <span data-split className="mt-6 block text-[clamp(52px,8.6vw,112px)] leading-[0.95] font-semibold rtl:leading-[1.2]">
+                {t.hero.titleA} <em className="text-gold italic font-medium">{t.hero.titleB}</em>
+              </span>
             </h1>
             <p data-intro className="lead !mt-7 !text-[clamp(18px,1.8vw,21px)]">
               {t.hero.lead}

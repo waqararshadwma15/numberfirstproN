@@ -151,6 +151,13 @@
     line-height: 1.3;
     letter-spacing: 0;
   }
+  /* Hero h1s hold an eyebrow plus the headline span; re-apply the tracking at the headline's own size. */
+  h1 > [data-split] {
+    letter-spacing: -0.01em;
+  }
+  :lang(ar) h1 > [data-split] {
+    letter-spacing: 0;
+  }
 
   ::selection {
     background: var(--color-gold);

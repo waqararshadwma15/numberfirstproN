@@ -313,6 +313,22 @@ export const en = {
           q: "Can you fix books that are behind?",
           a: "Yes. Backlog clean-up and system setup are quoted as a one-off fee, separate from the monthly package.",
         },
+        {
+          q: "When does a business have to register for VAT in Saudi Arabia?",
+          a: "VAT registration is mandatory once taxable supplies exceed SAR 375,000 over the past 12 months, or are expected to in the next 12. Businesses above SAR 187,500 can register voluntarily. The standard VAT rate is 15%. Numbers First can check your position as part of the free assessment.",
+        },
+        {
+          q: "How often are VAT returns filed in Saudi Arabia, and when are they due?",
+          a: "Businesses with annual taxable supplies above SAR 40 million file VAT returns monthly; most SMEs file quarterly. Each return, and any VAT payable, is due by the last day of the month after the period ends.",
+        },
+        {
+          q: "When is the Zakat return due?",
+          a: "The annual Zakat return is filed with ZATCA within 120 days of your financial year-end. Numbers First prepares it from closed, reconciled books, and annual Zakat filing is included from the Starter package.",
+        },
+        {
+          q: "What are ZATCA e-invoicing Phase 1 and Phase 2?",
+          a: "Phase 1 (Generation), in force since 4 December 2021, requires VAT-registered businesses to issue electronic invoices from a compliant system. Phase 2 (Integration) connects that system to ZATCA's Fatoora platform; it is rolled out in waves, and ZATCA notifies each business at least six months before its date. We prepare your invoicing for both.",
+        },
       ],
     },
     cta: {

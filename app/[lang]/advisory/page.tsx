@@ -10,7 +10,8 @@ import { BridgeBanner } from "@/components/sections/BridgeBanner";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Faq } from "@/components/sections/Faq";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { breadcrumbs, faqPage, graph, pageMetadata, advisoryService } from "@/lib/seo";
+import { site } from "@/lib/site";
+import { breadcrumbs, faqPage, graph, pageMetadata, advisoryService, webPage } from "@/lib/seo";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/advisory">): Promise<Metadata> {
   const { lang } = await params;
@@ -51,7 +52,9 @@ export default async function AdvisoryPage({ params }: PageProps<"/[lang]/adviso
       />
       <CtaBand lang={lang} common={common} title={t.cta.title} lead={t.cta.lead} path="advisory" />
       <JsonLd
-        data={graph(advisoryService(lang), breadcrumbs(lang, [{ name: t.hero.label, path: "/advisory" }]), faqPage(lang, "/advisory", t.faq.items))}
+        data={graph(
+          webPage(lang, "/advisory", t.meta.title, t.meta.description, { mainEntity: `${site.url}/${lang}/advisory#service`, breadcrumb: true }),
+          advisoryService(lang), breadcrumbs(lang, [{ name: t.hero.label, path: "/advisory" }]), faqPage(lang, "/advisory", t.faq.items))}
       />
     </>
   );

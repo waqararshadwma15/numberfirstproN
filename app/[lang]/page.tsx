@@ -10,7 +10,7 @@ import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Faq } from "@/components/sections/Faq";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { faqPage, graph, pageMetadata } from "@/lib/seo";
+import { faqPage, graph, pageMetadata, webPage } from "@/lib/seo";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;
@@ -34,7 +34,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       <SampleTeaser lang={lang} t={t.home.sample} />
       <Faq label={t.home.faq.label} title={t.home.faq.title} items={t.home.faq.items} />
       <CtaBand lang={lang} common={t.common} title={t.home.cta.title} lead={t.home.cta.lead} />
-      <JsonLd data={graph(faqPage(lang, "", t.home.faq.items))} />
+      <JsonLd data={graph(webPage(lang, "", t.meta.siteTitle, t.meta.siteDescription), faqPage(lang, "", t.home.faq.items))} />
     </>
   );
 }

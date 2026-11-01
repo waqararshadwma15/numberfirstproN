@@ -6,7 +6,11 @@ export const site = {
   phoneDisplay: "+966 59 856 5877",
   whatsapp: "966598565877",
   email: "info@numberfirst.pro",
-} as const;
+  country: "SA",
+  /* Official profiles (LinkedIn, Instagram, X, Google Business Profile, Facebook). Search and AI
+     engines use these to confirm the business is the same entity everywhere. Add full URLs here. */
+  sameAs: [] as string[],
+};
 
 export const waLink = (text?: string) =>
   `https://wa.me/${site.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ""}`;

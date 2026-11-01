@@ -8,7 +8,7 @@ import { EnquiryForm } from "@/components/enquire/EnquiryForm";
 import { HeroIntro } from "@/components/motion/HeroIntro";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { breadcrumbs, graph, pageMetadata } from "@/lib/seo";
+import { breadcrumbs, graph, pageMetadata, webPage } from "@/lib/seo";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/enquire">): Promise<Metadata> {
   const { lang } = await params;
@@ -29,11 +29,13 @@ export default async function EnquirePage({ params }: PageProps<"/[lang]/enquire
       <div aria-hidden className="pointer-events-none absolute -top-40 start-[-10%] size-[560px] rounded-full bg-gold/10 blur-[140px]" />
       <HeroIntro className="wrap relative grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div className="lg:sticky lg:top-[calc(var(--nav-h)+40px)] lg:self-start">
-          <p data-intro className="eyebrow">
-            {t.label}
-          </p>
-          <h1 data-split className="mt-6 text-[clamp(44px,6vw,76px)] leading-[1] rtl:leading-[1.25]">
-            {t.title}
+          <h1>
+            <span data-intro className="eyebrow leading-[1.65]">
+              {t.label}
+            </span>{" "}
+            <span data-split className="mt-6 block text-[clamp(44px,6vw,76px)] leading-[1] rtl:leading-[1.25]">
+              {t.title}
+            </span>
           </h1>
           <p data-intro className="lead">
             {t.lead}
@@ -86,7 +88,12 @@ export default async function EnquirePage({ params }: PageProps<"/[lang]/enquire
           </Suspense>
         </div>
       </HeroIntro>
-      <JsonLd data={graph(breadcrumbs(lang, [{ name: t.label, path: "/enquire" }]))} />
+      <JsonLd
+        data={graph(
+          webPage(lang, "/enquire", t.meta.title, t.meta.description, { type: "ContactPage", breadcrumb: true }),
+          breadcrumbs(lang, [{ name: t.label, path: "/enquire" }]),
+        )}
+      />
     </section>
   );
 }
