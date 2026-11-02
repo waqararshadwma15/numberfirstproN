@@ -22,7 +22,8 @@ export function HeroIntro({ children, className = "" }: { children: ReactNode; c
 
         document.fonts.ready.then(() => {
           const heads = gsap.utils.toArray<HTMLElement>("[data-split]");
-          split = new SplitText(heads, { type: "words", mask: "words" });
+          // aria "none": the words stay readable in place; the default would label the span (not allowed) and hide the words.
+          split = new SplitText(heads, { type: "words", mask: "words", aria: "none" });
           gsap.set(heads, { autoAlpha: 1 });
           gsap
             .timeline({ defaults: { ease: "expo.out" } })

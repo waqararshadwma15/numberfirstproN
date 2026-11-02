@@ -1,10 +1,11 @@
 import { waLink } from "@/lib/site";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
-export function WhatsAppFloat({ label }: { label: string }) {
+/* Always-visible contact, with a greeting pre-filled in the visitor's language. */
+export function WhatsAppFloat({ label, message }: { label: string; message: string }) {
   return (
     <a
-      href={waLink()}
+      href={waLink(message)}
       target="_blank"
       rel="noopener"
       aria-label={label}

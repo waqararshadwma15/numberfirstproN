@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BookOpenCheck, Receipt, Users, FileSpreadsheet } from "lucide-react";
 import { enquireHref, getDictionary, hasLocale } from "@/lib/i18n";
 import { PathHero } from "@/components/sections/PathHero";
 import { MonthlyCloseCard } from "@/components/accounting/MonthlyCloseCard";
-import { ComplianceGrid } from "@/components/accounting/ComplianceGrid";
+import { FactsStrip } from "@/components/home/FactsStrip";
+import { Journey } from "@/components/sections/Journey";
 import { PackagesSelector } from "@/components/accounting/PackagesSelector";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ServiceList } from "@/components/sections/ServiceList";
-import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
 import { BridgeBanner } from "@/components/sections/BridgeBanner";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Faq } from "@/components/sections/Faq";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { MotionRoot } from "@/components/motion/MotionRoot";
 import { site } from "@/lib/site";
 import { breadcrumbs, faqPage, graph, pageMetadata, accountingService, webPage } from "@/lib/seo";
 
@@ -40,33 +38,29 @@ export default async function AccountingPage({ params }: PageProps<"/[lang]/acco
         secondary={{ href: "#packages", label: common.cta.packages }}
         visual={<MonthlyCloseCard t={t.checklist} />}
       />
-
-      <section className="band pt-8">
-        <div className="wrap">
-          <SectionHeading label={t.services.label} title={t.services.title} lead={t.services.lead} />
-          <ServiceList items={t.services.items} icons={[BookOpenCheck, Receipt, Users, FileSpreadsheet]} tone="gold" />
-        </div>
-      </section>
-
-      <ComplianceGrid t={t.compliance} />
+      <FactsStrip facts={home.facts} label={home.factsLabel} />
+      <Journey label={t.journey.label} steps={t.journey.steps} t={common.journey} cta={{ href: "#packages", label: t.journey.cta }} tone="gold" />
       <PackagesSelector lang={lang} t={t.packages} />
-      <ProcessTimeline t={home.process} />
-
-      <Faq label={t.faq.label} title={t.faq.title} items={t.faq.items} tone="gold" />
       <BridgeBanner
         index={common.pathIndex.advisory}
         title={t.advisoryBridge.title}
         body={t.advisoryBridge.body}
         cta={t.advisoryBridge.cta}
-        href={`/${lang}/advisory`}
+        href={`/${lang}/advisory#journey`}
         tone="teal"
       />
-
-      <CtaBand lang={lang} common={common} title={t.cta.title} lead={t.cta.lead} path="accounting" />
+      <Faq label={t.faq.label} title={t.faq.title} items={t.faq.items} />
+      <CtaBand lang={lang} common={common} title={home.cta.title} lead={home.cta.lead} path="accounting" />
+      {/* Rendered inside the page (not the layout) so its effect runs after this page has hydrated:
+          the scroll animations then never touch markup React is still hydrating. */}
+      <MotionRoot />
       <JsonLd
         data={graph(
           webPage(lang, "/accounting", t.meta.title, t.meta.description, { mainEntity: `${site.url}/${lang}/accounting#service`, breadcrumb: true }),
-          accountingService(lang), breadcrumbs(lang, [{ name: t.hero.label, path: "/accounting" }]), faqPage(lang, "/accounting", t.faq.items))}
+          accountingService(lang),
+          breadcrumbs(lang, [{ name: t.hero.label, path: "/accounting" }]),
+          faqPage(lang, "/accounting", t.faq.items),
+        )}
       />
     </>
   );

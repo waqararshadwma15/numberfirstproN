@@ -8,6 +8,7 @@ import { EnquiryForm } from "@/components/enquire/EnquiryForm";
 import { HeroIntro } from "@/components/motion/HeroIntro";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { MotionRoot } from "@/components/motion/MotionRoot";
 import { breadcrumbs, graph, pageMetadata, webPage } from "@/lib/seo";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/enquire">): Promise<Metadata> {
@@ -20,11 +21,10 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/enquire">)
 export default async function EnquirePage({ params }: PageProps<"/[lang]/enquire">) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
-  const { enquire: t, common, advisory } = getDictionary(lang);
-  const industryKeys = advisory.industries.items.map((i) => i.key);
+  const { enquire: t, common } = getDictionary(lang);
 
   return (
-    <section className="relative overflow-hidden pt-[calc(var(--nav-h)+48px)] pb-24 md:pt-[calc(var(--nav-h)+80px)]">
+    <section className="relative overflow-hidden pt-[calc(var(--nav-h)+20px)] pb-16 md:pt-[calc(var(--nav-h)+36px)]">
       <div aria-hidden className="grid-lines pointer-events-none absolute inset-0" />
       <div aria-hidden className="pointer-events-none absolute -top-40 start-[-10%] size-[560px] rounded-full bg-gold/10 blur-[140px]" />
       <HeroIntro className="wrap relative grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
@@ -55,7 +55,7 @@ export default async function EnquirePage({ params }: PageProps<"/[lang]/enquire
             <p className="font-semibold">{t.direct}</p>
             <p className="mt-1 text-sm text-muted">{common.contact.lead}</p>
             <div className="mt-5 grid gap-2.5 text-sm">
-              <a href={waLink()} target="_blank" rel="noopener" className="flex items-center gap-3 hover:text-gold">
+              <a href={waLink(common.waGreeting)} target="_blank" rel="noopener" className="flex items-center gap-3 hover:text-gold">
                 <span className="text-[#25D366]">
                   <WhatsAppIcon size={18} />
                 </span>
@@ -84,10 +84,13 @@ export default async function EnquirePage({ params }: PageProps<"/[lang]/enquire
 
         <div id="form" data-intro className="scroll-mt-[calc(var(--nav-h)+16px)]">
           <Suspense fallback={<div className="card min-h-[560px] animate-pulse" />}>
-            <EnquiryForm t={t} industryKeys={industryKeys} />
+            <EnquiryForm t={t} request={common.request} />
           </Suspense>
         </div>
       </HeroIntro>
+      {/* Rendered inside the page (not the layout) so its effect runs after this page has hydrated:
+          the scroll animations then never touch markup React is still hydrating. */}
+      <MotionRoot />
       <JsonLd
         data={graph(
           webPage(lang, "/enquire", t.meta.title, t.meta.description, { type: "ContactPage", breadcrumb: true }),

@@ -12,7 +12,7 @@ export function Footer({ lang, t }: { lang: Locale; t: Dict["common"] }) {
 
   return (
     <footer className="border-t border-line bg-footer">
-      <div className="wrap grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:py-20">
+      <div className="wrap grid gap-12 py-12 md:grid-cols-[1.4fr_1fr_1fr] md:py-14">
         <div>
           <Image src="/assets/logo.jpg" alt={`${site.name} — ${t.footer.tagline}`} width={180} height={120} className="rounded-xl" />
           <p className="mt-6 max-w-sm text-sm text-muted">{t.footer.serving}</p>

@@ -8,7 +8,7 @@ import { samples } from "@/lib/site";
 import { gsap, MOTION_OK } from "@/lib/gsap";
 
 /* The three anonymised sample report pages from the live site, each opening in a lightbox dialog. */
-export function SampleGallery({ t }: { t: Dict["advisory"]["sample"] }) {
+export function SampleGallery({ t }: { t: Dict["home"]["sample"] }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState<number | null>(null);
 
@@ -30,11 +30,8 @@ export function SampleGallery({ t }: { t: Dict["advisory"]["sample"] }) {
         <h2 data-reveal className="h2 max-w-3xl">
           {t.title}
         </h2>
-        <p data-reveal className="lead">
-          {t.lead}
-        </p>
 
-        <ul className="mt-14 grid gap-5 md:grid-cols-3">
+        <ul className="mt-10 grid gap-5 md:grid-cols-3">
           {samples.map((s, i) => (
             <li key={s.src} data-reveal>
               <button type="button" onClick={() => show(i)} className="group block w-full text-start" aria-label={`${t.items[i].title}. ${t.open}`}>
