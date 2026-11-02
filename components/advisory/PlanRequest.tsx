@@ -3,7 +3,8 @@
 import { useId, useState, type FormEvent } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import type { Dict } from "@/lib/i18n";
-import { RequestResult } from "@/components/enquire/RequestResult";
+import { MAX_ATTACHMENT } from "@/lib/site";
+import { deliver, Honeypot, RequestResult, RequestSent, type RequestStatus } from "@/components/enquire/RequestResult";
 
 type Props = { t: Dict["advisory"]["plan"]; request: Dict["common"]["request"] };
 type Field = "name" | "phone" | "brief" | "file";
@@ -11,16 +12,20 @@ type Field = "name" | "phone" | "brief" | "file";
 const MAX_FILE = 10 * 1024 * 1024;
 
 /*
- * "Send us your business plan" for the advisory journey. With no backend the file is not uploaded:
- * its name goes into the request so the visitor remembers to attach it on WhatsApp or email.
+ * "Send us your business plan" for the advisory journey. The request is emailed to us with the plan
+ * attached when it fits (MAX_ATTACHMENT); a larger file is named in the request and the visitor
+ * sends it on WhatsApp or by email.
  */
 export function PlanRequest({ t, request }: Props) {
   const uid = useId();
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<RequestStatus>("idle");
+  const [fileLeft, setFileLeft] = useState(false);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (status === "sending") return;
     const form = e.currentTarget;
     const data = new FormData(form);
     const v = (k: string) => String(data.get(k) ?? "").trim();
@@ -40,19 +45,28 @@ export function PlanRequest({ t, request }: Props) {
     }
 
     const s = t.summary;
-    setMessage(
-      [
-        s.heading,
-        `${s.name}: ${v("name")}`,
-        `${s.company}: ${v("company") || request.empty}`,
-        `${s.phone}: ${v("phone")}`,
-        `${s.email}: ${v("email") || request.empty}`,
-        `${s.brief}: ${v("brief")}`,
-        `${s.budget}: ${v("budget")}`,
-        `${s.timing}: ${v("timing")}`,
-        ...(hasFile ? [`${s.file}: ${file.name} ${s.attaching}`] : []),
-      ].join("\n"),
-    );
+    const attach = hasFile && file.size <= MAX_ATTACHMENT;
+    const text = [
+      s.heading,
+      `${s.name}: ${v("name")}`,
+      `${s.company}: ${v("company") || request.empty}`,
+      `${s.phone}: ${v("phone")}`,
+      `${s.email}: ${v("email") || request.empty}`,
+      `${s.brief}: ${v("brief")}`,
+      `${s.budget}: ${v("budget")}`,
+      `${s.timing}: ${v("timing")}`,
+      ...(hasFile ? [`${s.file}: ${file.name}${attach ? "" : ` ${s.attaching}`}`] : []),
+    ].join("\n");
+    setMessage(text);
+    setFileLeft(hasFile && !attach);
+    setStatus("sending");
+    const payload = new FormData();
+    payload.set("subject", `${s.subject}: ${v("name")}`);
+    payload.set("message", text);
+    payload.set("email", v("email"));
+    payload.set("website", v("website"));
+    if (attach) payload.set("plan", file);
+    setStatus(await deliver(payload));
   };
 
   const err = (f: Field) =>
@@ -159,11 +173,18 @@ export function PlanRequest({ t, request }: Props) {
               </select>
             </div>
           </div>
-          <button type="submit" className="btn btn-teal sm:justify-self-start">
-            {t.submit}
+          <Honeypot />
+          <button type="submit" disabled={status === "sending"} className="btn btn-teal disabled:cursor-wait disabled:opacity-70 sm:justify-self-start">
+            {status === "sending" ? request.sending : t.submit}
             <ArrowRight size={18} className="arrow" />
           </button>
-          {message && <RequestResult message={message} title={t.readyTitle} body={t.readyBody} subject={t.summary.subject} t={request} />}
+          {status === "sent" &&
+            (fileLeft ? (
+              <RequestResult message={message} title={request.sentTitle} body={request.fileLater} subject={t.summary.subject} t={request} />
+            ) : (
+              <RequestSent t={request} />
+            ))}
+          {status === "manual" && <RequestResult message={message} title={t.readyTitle} body={t.readyBody} subject={t.summary.subject} t={request} />}
         </form>
       </div>
     </section>

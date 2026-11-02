@@ -12,7 +12,11 @@ export const site = {
   sameAs: [] as string[],
 };
 
-export const waLink = (text?: string) =>
+/* Largest business plan emailed as an attachment; Vercel caps a request body at 4.5 MB.
+   Larger files are still accepted by the form and sent by the visitor on WhatsApp or email. */
+export const MAX_ATTACHMENT = 4 * 1024 * 1024;
+
+export const waLink =(text?: string) =>
   `https://wa.me/${site.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
 
 export const mailLink = (subject: string, body: string) =>

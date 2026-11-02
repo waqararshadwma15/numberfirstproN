@@ -1,27 +1,73 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { Check, Copy, Mail } from "lucide-react";
 import type { Dict } from "@/lib/i18n";
 import { mailLink, waLink } from "@/lib/site";
 import { gsap, MOTION_OK } from "@/lib/gsap";
+import { sendRequest } from "@/lib/sendRequest";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
-type Props = { message: string; title: string; body: string; subject: string; t: Dict["common"]["request"] };
+/* idle -> sending -> sent (emailed to us), or manual (the visitor sends it themselves). */
+export type RequestStatus = "idle" | "sending" | "sent" | "manual";
 
-/*
- * There's no backend: a prepared request is shown here and the visitor sends it on WhatsApp
- * or by email (both pre-filled), or copies it.
- */
-export function RequestResult({ message, title, body, subject, t }: Props) {
-  const box = useRef<HTMLDivElement>(null);
-  const [copied, setCopied] = useState(false);
+/** Emails the request; any failure, including a network error, means the visitor sends it instead. */
+export async function deliver(payload: FormData): Promise<RequestStatus> {
+  try {
+    return (await sendRequest(payload)) ? "sent" : "manual";
+  } catch {
+    return "manual";
+  }
+}
 
+/* Off-screen field people never see; bots that fill every input give themselves away (checked in sendRequest). */
+export function Honeypot() {
+  return (
+    <div aria-hidden className="absolute -start-[9999px] size-px overflow-hidden">
+      <label>
+        Website
+        <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+      </label>
+    </div>
+  );
+}
+
+/* Brings a result panel into view and fades it in. */
+function useArrival(box: RefObject<HTMLDivElement | null>, key: string) {
   useEffect(() => {
     const el = box.current!;
     el.scrollIntoView({ behavior: "smooth", block: "nearest" });
     if (window.matchMedia(MOTION_OK).matches) gsap.fromTo(el, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "expo.out" });
-  }, [message]);
+  }, [box, key]);
+}
+
+/** Confirmation once the request has reached our inbox. */
+export function RequestSent({ t }: { t: Dict["common"]["request"] }) {
+  const box = useRef<HTMLDivElement>(null);
+  useArrival(box, "sent");
+  return (
+    <div ref={box} role="status" className="grid gap-1 rounded-2xl border border-gold/70 bg-gold/[0.04] p-5">
+      <span className="flex items-center gap-2 font-semibold">
+        <span className="grid size-6 place-items-center rounded-full bg-gold text-on-gold">
+          <Check size={14} strokeWidth={3} aria-hidden />
+        </span>
+        {t.sentTitle}
+      </span>
+      <span className="text-sm text-muted">{t.sentBody}</span>
+    </div>
+  );
+}
+
+type Props = { message: string; title: string; body: string; subject: string; t: Dict["common"]["request"] };
+
+/*
+ * Fallback when the request could not be emailed (or a file is too large to attach): the prepared
+ * request is shown and the visitor sends it on WhatsApp or by email (both pre-filled), or copies it.
+ */
+export function RequestResult({ message, title, body, subject, t }: Props) {
+  const box = useRef<HTMLDivElement>(null);
+  const [copied, setCopied] = useState(false);
+  useArrival(box, message);
 
   const copy = async () => {
     try {

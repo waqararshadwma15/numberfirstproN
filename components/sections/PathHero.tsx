@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
-import { HeroIntro } from "@/components/motion/HeroIntro";
 
 type Props = {
   index: string;
@@ -24,15 +23,15 @@ export function PathHero({ index, label, lines, lead, tone, primary, secondary, 
         aria-hidden
         className={`pointer-events-none absolute -top-40 end-[-10%] size-[620px] rounded-full blur-[140px] ${gold ? "bg-gold/12" : "bg-teal/14"}`}
       />
-      <HeroIntro className="wrap relative grid items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
+      <div className="wrap relative grid items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
         <div>
           {/* The service name sits inside the h1 so the main heading carries the search phrase,
-              while the headline keeps its look and entrance animation. */}
+              while the headline keeps its look. Hero text is never hidden for motion: it is the LCP element. */}
           <h1>
-            <span data-intro className={`eyebrow leading-[1.65] ${gold ? "" : "eyebrow-teal"}`}>
+            <span className={`eyebrow leading-[1.65] ${gold ? "" : "eyebrow-teal"}`}>
               <span className="tabular-nums">{index}</span> · {label}
             </span>{" "}
-            <span data-split className="mt-6 block text-[clamp(46px,7.4vw,96px)] leading-[0.98] rtl:leading-[1.25]">
+            <span data-headline className="mt-6 block text-[clamp(46px,7.4vw,96px)] leading-[0.98] rtl:leading-[1.25]">
               {lines.map((line, i) => (
                 <span key={line} className={`block ${i === lines.length - 1 ? (gold ? "text-gold italic" : "text-teal italic") : ""}`}>
                   {line}{" "}
@@ -40,10 +39,10 @@ export function PathHero({ index, label, lines, lead, tone, primary, secondary, 
               ))}
             </span>
           </h1>
-          <p data-intro className="lead !mt-7">
+          <p className="lead !mt-7">
             {lead}
           </p>
-          <div data-intro className="mt-9 flex flex-col gap-3 xs:flex-row xs:flex-wrap">
+          <div className="mt-9 flex flex-col gap-3 xs:flex-row xs:flex-wrap">
             <Link href={primary.href} className={`btn ${gold ? "btn-gold" : "btn-teal"}`}>
               {primary.label}
               <ArrowRight size={18} className="arrow" />
@@ -55,10 +54,10 @@ export function PathHero({ index, label, lines, lead, tone, primary, secondary, 
             )}
           </div>
         </div>
-        <div data-intro className="mx-auto w-full max-w-[480px]">
+        <div className="mx-auto w-full max-w-[480px]">
           {visual}
         </div>
-      </HeroIntro>
+      </div>
     </section>
   );
 }

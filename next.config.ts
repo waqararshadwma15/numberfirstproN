@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
+  /* Room for a 4 MB business plan (MAX_ATTACHMENT in lib/site.ts) plus the form fields. */
+  experimental: {
+    serverActions: { bodySizeLimit: "4.4mb" },
+  },
   /* One canonical host: www answers with a 200 copy of every page otherwise. */
   async redirects() {
     return [
