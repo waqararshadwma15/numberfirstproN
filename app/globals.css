@@ -156,10 +156,10 @@
     letter-spacing: 0;
   }
   /* Hero h1s hold an eyebrow plus the headline span; re-apply the tracking at the headline's own size. */
-  h1 > [data-split] {
+  h1 > [data-headline] {
     letter-spacing: -0.01em;
   }
-  :lang(ar) h1 > [data-split] {
+  :lang(ar) h1 > [data-headline] {
     letter-spacing: 0;
   }
 
@@ -389,9 +389,7 @@
 }
 
 /* Scroll reveals: hidden only when JS motion is on (class set by an inline script before paint). */
-.motion [data-reveal],
-.motion [data-intro],
-.motion [data-split] {
+.motion [data-reveal] {
   opacity: 0;
   visibility: hidden;
 }

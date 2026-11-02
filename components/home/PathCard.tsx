@@ -41,7 +41,6 @@ export function PathCard({ href, index, title, summary, points, meta, cta, tone,
       href={href}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      data-intro
       className={`group/card relative isolate flex flex-col overflow-hidden rounded-[28px] border border-line bg-surface p-7 transition-[border-color,transform,opacity] duration-500 ease-out-expo hover:-translate-y-1.5 sm:p-9 ${
         gold ? "hover:border-gold/60" : "hover:border-teal/60"
       }`}

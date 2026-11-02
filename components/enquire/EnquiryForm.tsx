@@ -4,7 +4,7 @@ import { useId, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import type { Dict } from "@/lib/i18n";
-import { RequestResult } from "./RequestResult";
+import { deliver, Honeypot, RequestResult, RequestSent, type RequestStatus } from "./RequestResult";
 
 type Props = { t: Dict["enquire"]; request: Dict["common"]["request"] };
 
@@ -17,9 +17,11 @@ export function EnquiryForm({ t, request }: Props) {
   const plan = PLAN_KEYS.indexOf(useSearchParams().get("plan") ?? "");
   const [nameError, setNameError] = useState(false);
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<RequestStatus>("idle");
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (status === "sending") return;
     const form = e.currentTarget;
     const data = new FormData(form);
     const v = (k: string) => String(data.get(k) ?? "").trim();
@@ -30,16 +32,21 @@ export function EnquiryForm({ t, request }: Props) {
     }
     setNameError(false);
     const s = t.summary;
-    setMessage(
-      [
-        s.heading,
-        `${s.name}: ${v("name")}`,
-        `${s.company}: ${v("company") || request.empty}`,
-        `${s.balance}: ${v("balance")}`,
-        `${s.phone}: ${v("phone") || request.empty}`,
-        `${s.need}: ${v("need") || request.empty}`,
-      ].join("\n"),
-    );
+    const text = [
+      s.heading,
+      `${s.name}: ${v("name")}`,
+      `${s.company}: ${v("company") || request.empty}`,
+      `${s.balance}: ${v("balance")}`,
+      `${s.phone}: ${v("phone") || request.empty}`,
+      `${s.need}: ${v("need") || request.empty}`,
+    ].join("\n");
+    setMessage(text);
+    setStatus("sending");
+    const payload = new FormData();
+    payload.set("subject", `${s.subject}: ${v("name")}`);
+    payload.set("message", text);
+    payload.set("website", v("website"));
+    setStatus(await deliver(payload));
   };
 
   return (
@@ -92,11 +99,13 @@ export function EnquiryForm({ t, request }: Props) {
         <label htmlFor={`${uid}-need`}>{t.fields.need}</label>
         <textarea id={`${uid}-need`} name="need" rows={4} className="input resize-y" placeholder={t.fields.needPlaceholder} />
       </div>
-      <button type="submit" className="btn btn-gold sm:justify-self-start">
-        {t.submit}
+      <Honeypot />
+      <button type="submit" disabled={status === "sending"} className="btn btn-gold disabled:cursor-wait disabled:opacity-70 sm:justify-self-start">
+        {status === "sending" ? request.sending : t.submit}
         <ArrowRight size={18} className="arrow" />
       </button>
-      {message && <RequestResult message={message} title={t.readyTitle} body={t.readyBody} subject={t.summary.subject} t={request} />}
+      {status === "sent" && <RequestSent t={request} />}
+      {status === "manual" && <RequestResult message={message} title={t.readyTitle} body={t.readyBody} subject={t.summary.subject} t={request} />}
     </form>
   );
 }

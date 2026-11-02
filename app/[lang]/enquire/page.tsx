@@ -5,7 +5,6 @@ import { Check, Mail, Phone } from "lucide-react";
 import { getDictionary, hasLocale } from "@/lib/i18n";
 import { site, waLink } from "@/lib/site";
 import { EnquiryForm } from "@/components/enquire/EnquiryForm";
-import { HeroIntro } from "@/components/motion/HeroIntro";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { MotionRoot } from "@/components/motion/MotionRoot";
@@ -27,20 +26,20 @@ export default async function EnquirePage({ params }: PageProps<"/[lang]/enquire
     <section className="relative overflow-hidden pt-[calc(var(--nav-h)+20px)] pb-16 md:pt-[calc(var(--nav-h)+36px)]">
       <div aria-hidden className="grid-lines pointer-events-none absolute inset-0" />
       <div aria-hidden className="pointer-events-none absolute -top-40 start-[-10%] size-[560px] rounded-full bg-gold/10 blur-[140px]" />
-      <HeroIntro className="wrap relative grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      <div className="wrap relative grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div className="lg:sticky lg:top-[calc(var(--nav-h)+40px)] lg:self-start">
           <h1>
-            <span data-intro className="eyebrow leading-[1.65]">
+            <span className="eyebrow leading-[1.65]">
               {t.label}
             </span>{" "}
-            <span data-split className="mt-6 block text-[clamp(44px,6vw,76px)] leading-[1] rtl:leading-[1.25]">
+            <span data-headline className="mt-6 block text-[clamp(44px,6vw,76px)] leading-[1] rtl:leading-[1.25]">
               {t.title}
             </span>
           </h1>
-          <p data-intro className="lead">
+          <p className="lead">
             {t.lead}
           </p>
-          <ul data-intro className="mt-8 grid gap-3">
+          <ul className="mt-8 grid gap-3">
             {t.checks.map((c) => (
               <li key={c} className="flex gap-3">
                 <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-gold/15 text-gold">
@@ -51,7 +50,7 @@ export default async function EnquirePage({ params }: PageProps<"/[lang]/enquire
             ))}
           </ul>
 
-          <div data-intro className="mt-10 rounded-3xl border border-line bg-surface/70 p-6">
+          <div className="mt-10 rounded-3xl border border-line bg-surface/70 p-6">
             <p className="font-semibold">{t.direct}</p>
             <p className="mt-1 text-sm text-muted">{common.contact.lead}</p>
             <div className="mt-5 grid gap-2.5 text-sm">
@@ -82,12 +81,12 @@ export default async function EnquirePage({ params }: PageProps<"/[lang]/enquire
           </div>
         </div>
 
-        <div id="form" data-intro className="scroll-mt-[calc(var(--nav-h)+16px)]">
+        <div id="form" className="scroll-mt-[calc(var(--nav-h)+16px)]">
           <Suspense fallback={<div className="card min-h-[560px] animate-pulse" />}>
             <EnquiryForm t={t} request={common.request} />
           </Suspense>
         </div>
-      </HeroIntro>
+      </div>
       {/* Rendered inside the page (not the layout) so its effect runs after this page has hydrated:
           the scroll animations then never touch markup React is still hydrating. */}
       <MotionRoot />

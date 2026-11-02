@@ -63,8 +63,12 @@ export const en = {
       play: "Play",
       hint: "Tap any step",
     },
-    /* Result panel shared by the request forms (there is no backend: the visitor sends it). */
+    /* Shared by the request forms: emailed to us directly; if that fails, the visitor sends it. */
     request: {
+      sending: "Sending...",
+      sentTitle: "Thank you, we have your request.",
+      sentBody: "We reply within one working day by WhatsApp, phone or email.",
+      fileLater: "Your file is over 4 MB, so it was not attached. Please send it to us on WhatsApp or by email.",
       sendWhatsapp: "Send on WhatsApp",
       sendEmail: "Email us",
       copy: "Copy request",
