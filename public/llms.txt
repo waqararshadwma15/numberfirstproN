@@ -27,12 +27,13 @@
 
 ## Solution 2: Financial Planning & Advisory
 
-- Budgeting and forecasting reviewed against actuals every month
-- Pricing and margin decisions
-- Lease and expansion decisions
-- Profitability by branch (revenue, EBITDA and net profit by month)
-- CFO-lite review with recommended actions
-- Audit liaison and board pack
+For businesses planning a new venture, a branch or an investment. Fixed project fee, quoted after a review of the business plan. Five waypoints:
+
+1. Financial planning: 3 to 5 year P&L and cash-flow forecast, break-even point and funding need
+2. Investment: payback, NPV and IRR, and an investor- and bank-ready summary
+3. Budgeting: monthly budget by branch, cash-flow budget and KPI targets
+4. Monitor: budget-versus-actual report, gaps explained and forecast updated
+5. Controls: approval limits and authority matrix; cash, purchasing and stock controls
 
 ### Industry focus
 
@@ -55,9 +56,9 @@ Healthcare; Retail and e-commerce; Hospitality; Food and beverage; Sports and fi
 
 ## Pages
 
-- [Home (English)](https://numberfirst.pro/en): overview of both solutions
-- [Accounting & Bookkeeping](https://numberfirst.pro/en/accounting): services, Saudi compliance, packages and FAQ
-- [Financial Planning & Advisory](https://numberfirst.pro/en/advisory): services, industry expertise, sample report and FAQ
+- [Home (English)](https://numberfirst.pro/en): both solutions, clients, sample report and FAQ
+- [Accounting & Bookkeeping](https://numberfirst.pro/en/accounting): five-step bookkeeping journey, packages and Saudi VAT, Zakat and e-invoicing FAQ
+- [Financial Planning & Advisory](https://numberfirst.pro/en/advisory): five-waypoint advisory journey, business-plan request and FAQ
 - [Free assessment](https://numberfirst.pro/en/enquire): request a free review of your books
 - [Arabic home](https://numberfirst.pro/ar): الرئيسية
 - [Arabic: Accounting & Bookkeeping](https://numberfirst.pro/ar/accounting): المحاسبة ومسك الدفاتر
@@ -68,4 +69,4 @@ Healthcare; Retail and e-commerce; Hospitality; Food and beverage; Sports and fi
 
 - [Sitemap](https://numberfirst.pro/sitemap.xml)
 
-Last updated: 2026-11-01
+Last updated: 2026-11-02

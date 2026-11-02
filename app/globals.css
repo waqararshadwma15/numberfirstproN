@@ -112,8 +112,12 @@
 }
 
 :lang(ar) {
-  --font-display: var(--font-amiri), var(--font-plex-arabic), serif;
-  --font-sans: var(--font-plex-arabic), system-ui, sans-serif;
+  --font-display: var(--font-el-messiri), var(--font-tajawal), serif;
+  --font-sans: var(--font-tajawal), system-ui, sans-serif;
+}
+/* Arabic has no italic: the browser would fake a slant, so accents stay upright and keep only their colour. */
+:lang(ar) :is(em, .italic) {
+  font-style: normal;
 }
 
 @layer base {
@@ -184,7 +188,7 @@
   }
 
   .band {
-    padding-block: clamp(72px, 10vw, 140px);
+    padding-block: clamp(40px, 5vw, 68px);
   }
 
   .eyebrow {
@@ -390,6 +394,13 @@
 .motion [data-split] {
   opacity: 0;
   visibility: hidden;
+}
+
+/* Journey progress bar: fills one step's share while that step plays (components/sections/Journey). */
+@keyframes nf-fill {
+  from {
+    width: var(--from);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

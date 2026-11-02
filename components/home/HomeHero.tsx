@@ -1,12 +1,13 @@
 import Image from "next/image";
-import { BookOpenCheck, ChartLine } from "lucide-react";
+import Link from "next/link";
+import { BookOpenCheck, ChartLine, CirclePlay } from "lucide-react";
 import type { Dict, Locale } from "@/lib/i18n";
 import { HeroIntro } from "@/components/motion/HeroIntro";
 import { PathCard } from "./PathCard";
 
 export function HomeHero({ lang, t, common }: { lang: Locale; t: Dict["home"]; common: Dict["common"] }) {
   return (
-    <section className="relative overflow-hidden pt-[calc(var(--nav-h)+48px)] pb-20 md:pt-[calc(var(--nav-h)+72px)]">
+    <section className="relative overflow-hidden pt-[calc(var(--nav-h)+20px)] pb-12 md:pt-[calc(var(--nav-h)+36px)] md:pb-16">
       <div aria-hidden className="grid-lines pointer-events-none absolute inset-0" />
       <div aria-hidden className="pointer-events-none absolute -top-32 start-[8%] size-[480px] rounded-full bg-gold/10 blur-[120px]" />
       <div aria-hidden className="pointer-events-none absolute top-40 end-[4%] size-[420px] rounded-full bg-teal/10 blur-[120px]" />
@@ -26,6 +27,18 @@ export function HomeHero({ lang, t, common }: { lang: Locale; t: Dict["home"]; c
             <p data-intro className="lead !mt-7 !text-[clamp(18px,1.8vw,21px)]">
               {t.hero.lead}
             </p>
+            <div data-intro className="mt-8">
+              <div className="flex flex-col gap-3 xs:flex-row xs:flex-wrap">
+                <Link href={`/${lang}/accounting#journey`} className="btn btn-gold">
+                  <CirclePlay size={18} aria-hidden />
+                  {t.hero.exploreAccounting}
+                </Link>
+                <Link href={`/${lang}/advisory#journey`} className="btn btn-line">
+                  <CirclePlay size={18} className="text-teal" aria-hidden />
+                  {t.hero.exploreAdvisory}
+                </Link>
+              </div>
+            </div>
           </div>
           <div data-intro className="relative mx-auto hidden w-full max-w-[440px] lg:block" data-parallax="0.12">
             <Image
@@ -34,26 +47,38 @@ export function HomeHero({ lang, t, common }: { lang: Locale; t: Dict["home"]; c
               width={770}
               height={470}
               priority
-              className="h-auto w-full drop-shadow-[0_30px_60px_rgb(240_179_35/0.18)] in-data-[theme=light]:mix-blend-multiply in-data-[theme=light]:drop-shadow-none"
+              className="h-auto w-full drop-shadow-[0_30px_60px_rgb(240_179_35/0.18)] in-data-[theme=light]:hidden"
+            />
+            {/* The original emblem has a dark glow baked in, which shows as a dark oval on the light theme.
+                This copy has the glow removed; a fine edge and soft shadow keep the silver letters readable. */}
+            <Image
+              src="/assets/emblem-light.png"
+              alt={t.hero.emblemAlt}
+              width={770}
+              height={470}
+              loading="eager"
+              className="hidden h-auto w-full in-data-[theme=light]:block"
+              style={{ filter: "drop-shadow(0 0 1px rgb(19 24 26 / .55)) drop-shadow(0 14px 28px rgb(19 24 26 / .22))" }}
             />
           </div>
         </div>
 
-        <div className="mt-16 flex items-center gap-4 md:mt-20" data-intro>
-          <span className="text-sm font-semibold tracking-[0.16em] text-muted uppercase rtl:tracking-normal">{t.hero.choose}</span>
+        <div className="mt-10 flex items-center gap-4 md:mt-12" data-intro>
+          {/* An h2 so the path cards' h3 titles sit under a heading of their own level. */}
+          <h2 className="text-sm leading-normal font-semibold tracking-[0.16em] text-muted uppercase [font-family:var(--font-sans)] rtl:tracking-normal">{t.hero.choose}</h2>
           <span className="h-px flex-1 bg-line" />
         </div>
 
         <div className="mt-6 grid gap-5 lg:grid-cols-2 [&:has(>a:hover)>a:not(:hover)]:opacity-60">
           <PathCard
-            href={`/${lang}/accounting`}
+            href={`/${lang}/accounting#journey`}
             index={common.pathIndex.accounting}
             tone="gold"
             icon={<BookOpenCheck size={22} />}
             {...t.paths.accounting}
           />
           <PathCard
-            href={`/${lang}/advisory`}
+            href={`/${lang}/advisory#journey`}
             index={common.pathIndex.advisory}
             tone="teal"
             icon={<ChartLine size={22} />}

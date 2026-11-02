@@ -10,7 +10,7 @@ const pages = [
 ] as const;
 
 // Bump when page content changes meaningfully.
-const LAST_UPDATED = new Date("2026-11-01");
+const LAST_UPDATED = new Date("2026-11-02");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return pages.flatMap((p) =>

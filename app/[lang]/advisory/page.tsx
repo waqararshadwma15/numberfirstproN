@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { enquireHref, getDictionary, hasLocale } from "@/lib/i18n";
+import { getDictionary, hasLocale } from "@/lib/i18n";
 import { PathHero } from "@/components/sections/PathHero";
 import { ForecastChart } from "@/components/advisory/ForecastChart";
-import { AdvisoryServices } from "@/components/advisory/AdvisoryServices";
-import { IndustryExplorer } from "@/components/advisory/IndustryExplorer";
-import { SampleGallery } from "@/components/advisory/SampleGallery";
+import { Journey } from "@/components/sections/Journey";
+import { IndustryChips } from "@/components/advisory/IndustryChips";
+import { PlanRequest } from "@/components/advisory/PlanRequest";
 import { BridgeBanner } from "@/components/sections/BridgeBanner";
-import { CtaBand } from "@/components/sections/CtaBand";
 import { Faq } from "@/components/sections/Faq";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { MotionRoot } from "@/components/motion/MotionRoot";
 import { site } from "@/lib/site";
-import { breadcrumbs, faqPage, graph, pageMetadata, advisoryService, webPage } from "@/lib/seo";
+import { advisoryService, breadcrumbs, faqPage, graph, pageMetadata, webPage } from "@/lib/seo";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/advisory">): Promise<Metadata> {
   const { lang } = await params;
@@ -33,28 +33,33 @@ export default async function AdvisoryPage({ params }: PageProps<"/[lang]/adviso
         lines={[t.hero.titleA, t.hero.titleB]}
         lead={t.hero.lead}
         tone="teal"
-        primary={{ href: enquireHref(lang, "?path=advisory"), label: common.cta.assessment }}
-        secondary={{ href: "#industries", label: t.industries.label }}
+        primary={{ href: "#plan", label: t.journey.cta }}
+        secondary={{ href: "#journey", label: common.cta.explore }}
         visual={<ForecastChart t={t.chart} />}
       />
-      <AdvisoryServices t={t.services} />
-      <IndustryExplorer lang={lang} t={t.industries} cta={common.cta.assessment} />
-      <SampleGallery t={t.sample} />
+      <Journey label={t.journey.label} steps={t.journey.steps} t={common.journey} cta={{ href: "#plan", label: t.journey.cta }} tone="teal">
+        <IndustryChips label={t.industries.label} items={t.industries.items} />
+      </Journey>
+      <PlanRequest t={t.plan} request={common.request} />
       <Faq label={t.faq.label} title={t.faq.title} items={t.faq.items} tone="teal" />
       <BridgeBanner
         index={common.pathIndex.accounting}
-        label={t.foundation.label}
-        title={t.foundation.title}
-        body={t.foundation.body}
-        cta={t.foundation.cta}
-        href={`/${lang}/accounting#packages`}
+        title={t.accountingBridge.title}
+        body={t.accountingBridge.body}
+        cta={t.accountingBridge.cta}
+        href={`/${lang}/accounting#journey`}
         tone="gold"
       />
-      <CtaBand lang={lang} common={common} title={t.cta.title} lead={t.cta.lead} path="advisory" />
+      {/* Rendered inside the page (not the layout) so its effect runs after this page has hydrated:
+          the scroll animations then never touch markup React is still hydrating. */}
+      <MotionRoot />
       <JsonLd
         data={graph(
           webPage(lang, "/advisory", t.meta.title, t.meta.description, { mainEntity: `${site.url}/${lang}/advisory#service`, breadcrumb: true }),
-          advisoryService(lang), breadcrumbs(lang, [{ name: t.hero.label, path: "/advisory" }]), faqPage(lang, "/advisory", t.faq.items))}
+          advisoryService(lang),
+          breadcrumbs(lang, [{ name: t.hero.label, path: "/advisory" }]),
+          faqPage(lang, "/advisory", t.faq.items),
+        )}
       />
     </>
   );

@@ -18,7 +18,7 @@ type Props = {
 export function PathHero({ index, label, lines, lead, tone, primary, secondary, visual }: Props) {
   const gold = tone === "gold";
   return (
-    <section className="relative overflow-hidden pt-[calc(var(--nav-h)+48px)] pb-20 md:pt-[calc(var(--nav-h)+80px)] md:pb-28">
+    <section className="relative overflow-hidden pt-[calc(var(--nav-h)+20px)] pb-12 md:pt-[calc(var(--nav-h)+36px)] md:pb-16">
       <div aria-hidden className="grid-lines pointer-events-none absolute inset-0" />
       <div
         aria-hidden

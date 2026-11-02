@@ -42,8 +42,7 @@ export function PathCard({ href, index, title, summary, points, meta, cta, tone,
       onPointerMove={onMove}
       onPointerLeave={onLeave}
       data-intro
-      aria-label={`${title}. ${cta}`}
-      className={`group/card relative isolate flex min-h-[440px] flex-col overflow-hidden rounded-[28px] border border-line bg-surface p-7 transition-[border-color,transform,opacity] duration-500 ease-out-expo hover:-translate-y-1.5 sm:p-10 lg:min-h-[480px] ${
+      className={`group/card relative isolate flex flex-col overflow-hidden rounded-[28px] border border-line bg-surface p-7 transition-[border-color,transform,opacity] duration-500 ease-out-expo hover:-translate-y-1.5 sm:p-9 ${
         gold ? "hover:border-gold/60" : "hover:border-teal/60"
       }`}
     >
@@ -82,7 +81,7 @@ export function PathCard({ href, index, title, summary, points, meta, cta, tone,
         </span>
       </div>
 
-      <div className="mt-auto pt-14">
+      <div className="mt-auto pt-8">
         <h3 className="text-[clamp(34px,4vw,50px)]">{title}</h3>
         <p className="mt-4 max-w-md text-muted">{summary}</p>
         <ul className="mt-7 flex flex-wrap gap-2">

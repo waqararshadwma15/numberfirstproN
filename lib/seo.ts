@@ -106,7 +106,7 @@ export function organizationGraph(lang: Locale) {
 }
 
 /* Content date for WebPage nodes; keep in step with LAST_UPDATED in app/sitemap.ts. */
-const DATE_MODIFIED = "2026-11-01";
+const DATE_MODIFIED = "2026-11-02";
 
 /**
  * The page itself, tied to the site and the business. Answer engines read `about`, `mainEntity`
@@ -207,19 +207,19 @@ export function advisoryService(lang: Locale) {
     "@type": "Service",
     "@id": `${site.url}/${lang}/advisory#service`,
     name: t.hero.label,
-    serviceType: "Financial planning, budgeting, cash-flow forecasting and financial advisory",
+    serviceType: "Financial planning, investment appraisal, budgeting, performance monitoring and financial controls",
     description: t.meta.description,
     provider: { "@id": ORG_ID },
     areaServed: { "@type": "Country", name: "Saudi Arabia" },
     inLanguage: lang,
     url: `${site.url}/${lang}/advisory`,
-    audience: t.industries.items.map((i) => ({ "@type": "BusinessAudience", name: i.name })),
+    audience: t.industries.items.map((name) => ({ "@type": "BusinessAudience", name })),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: t.services.title,
-      itemListElement: t.services.items.map((s) => ({
+      name: t.journey.label,
+      itemListElement: t.journey.steps.map((s) => ({
         "@type": "Offer",
-        itemOffered: { "@type": "Service", name: s.title, description: s.body },
+        itemOffered: { "@type": "Service", name: s.name, description: `${s.desc} ${s.get.join(", ")}.` },
       })),
     },
   };

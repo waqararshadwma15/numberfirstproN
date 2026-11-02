@@ -59,7 +59,7 @@ export function PackagesSelector({ lang, t }: Props) {
           </fieldset>
         </div>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {t.plans.map((p, i) => {
             const isMatch = match === i;
             const popular = p.key === "growth";

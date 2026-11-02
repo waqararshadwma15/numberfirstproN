@@ -1,13 +1,14 @@
 /*
- * English copy. Business facts (services, fees, package criteria, process, sectors, clients)
- * come from the live numberfirst.pro site. The Arabic dictionary must match this shape.
+ * English copy. Page content follows the manager-approved reference (NumbersFirstS/index.html);
+ * interface labels (navigation, theme, menus, selectors) keep the site's own wording.
+ * The Arabic dictionary must match this shape.
  */
 
 export const en = {
   meta: {
     siteTitle: "Numbers First | Bookkeeping & Financial Advisory in Saudi Arabia",
     siteDescription:
-      "Monthly bookkeeping, VAT and Zakat filing, ZATCA e-invoicing and payroll (WPS), plus budgeting, forecasting and financial advisory for Saudi SMEs. Fixed fees from SAR 1,000 a month.",
+      "Monthly bookkeeping, VAT and Zakat filing, ZATCA e-invoicing and payroll (WPS), plus financial planning and advisory for Saudi SMEs. Fixed fees from SAR 1,000 a month.",
   },
   common: {
     brand: "NUMBERS FIRST",
@@ -28,6 +29,8 @@ export const en = {
       packages: "See packages",
       backHome: "Back to home",
     },
+    /* Pre-filled WhatsApp greeting, in the visitor's language. */
+    waGreeting: "Hello, I would like a free assessment for my books.",
     switchLang: "العربية",
     switchLangLabel: "التبديل إلى العربية",
     theme: { toLight: "Switch to light theme", toDark: "Switch to dark theme" },
@@ -52,6 +55,22 @@ export const en = {
       title: "This page isn't on the books",
       lead: "The page you're looking for doesn't exist or has moved.",
     },
+    /* Labels shared by both five-step journeys. */
+    journey: {
+      provide: "You provide",
+      get: "You get",
+      pause: "Pause",
+      play: "Play",
+      hint: "Tap any step",
+    },
+    /* Result panel shared by the request forms (there is no backend: the visitor sends it). */
+    request: {
+      sendWhatsapp: "Send on WhatsApp",
+      sendEmail: "Email us",
+      copy: "Copy request",
+      copied: "Copied",
+      empty: "-",
+    },
   },
 
   home: {
@@ -59,70 +78,35 @@ export const en = {
       label: "Bookkeeping & financial advisory",
       titleA: "Your numbers,",
       titleB: "first.",
-      lead: "Two ways we help Saudi small and medium businesses. Choose the one that fits where you are today.",
+      lead: "Two ways we help Saudi small and medium businesses. Choose the one that fits today.",
+      exploreAccounting: "Accounting and Bookkeeping",
+      exploreAdvisory: "Financial Planning and Advisory",
       choose: "Choose your solution",
       emblemAlt: "Numbers First NF emblem with rising gold bars",
     },
     paths: {
       accounting: {
         title: "Accounting & Bookkeeping",
-        summary: "Accurate monthly books and ZATCA-ready compliance, for one fixed monthly fee.",
-        points: ["Monthly bookkeeping", "VAT, Zakat & e-invoicing", "Payroll & WPS"],
+        summary: "Choose this if you need your books closed every month and VAT, Zakat, ZATCA and WPS handled on time.",
+        points: ["ZATCA ready", "VAT & Zakat", "Payroll & WPS"],
         meta: "From SAR 1,000 / month",
-        cta: "Explore accounting",
+        cta: "See the journey",
       },
       advisory: {
         title: "Financial Planning & Advisory",
-        summary: "Budgets, forecasts and decisions on pricing, margins, leases and expansion, backed by your own numbers.",
-        points: ["Budgeting & forecasting", "Cash-flow planning", "Pricing & expansion decisions"],
-        meta: "Sector expertise across 6 industries",
-        cta: "Explore advisory",
+        summary: "Choose this if you are planning a new business, a branch or an investment and need the numbers to decide.",
+        points: ["Financial planning", "Investment", "Budgeting", "Monitor", "Controls"],
+        meta: "Fixed project fee",
+        cta: "See the journey",
       },
     },
+    factsLabel: "At a glance",
     facts: [
       { title: "ZATCA ready", body: "E-invoicing on the Fatoora platform" },
       { title: "VAT & Zakat", body: "Returns filed on time" },
       { title: "Payroll & WPS", body: "Salaries and Mudad compliance" },
       { title: "Fixed fees", body: "SAR 1,000 to 5,000 a month" },
     ],
-    choose: {
-      label: "Which do you need?",
-      title: "Two distinct solutions, one team behind your numbers",
-      lead: "Start with the one that answers today's question. Many businesses use both.",
-      accounting: {
-        title: "Choose Accounting & Bookkeeping if",
-        items: [
-          "You need every transaction recorded, reconciled and closed each month",
-          "VAT, Zakat or ZATCA e-invoicing deadlines need handling",
-          "You run payroll and need WPS and Mudad compliance",
-          "You want a monthly P&L, balance sheet and cash-flow pack",
-        ],
-      },
-      advisory: {
-        title: "Choose Financial Planning & Advisory if",
-        items: [
-          "You're setting prices or reviewing margins",
-          "You're weighing a lease, a new branch or an expansion",
-          "You want budgets and cash-flow forecasts reviewed against actuals",
-          "You need to see profitability by branch and know what to do next",
-        ],
-      },
-      both: {
-        title: "Need both?",
-        body: "Good advice starts with accurate books. Our Premium package combines monthly bookkeeping with a cash-flow forecast and a CFO-lite review.",
-        cta: "Compare packages",
-      },
-    },
-    process: {
-      label: "How it works",
-      title: "From first call to monthly reports",
-      steps: [
-        { title: "Free assessment", body: "We review your books and compliance position and note the gaps." },
-        { title: "Fixed-fee proposal", body: "A written scope and monthly fee, matched to your balance sheet." },
-        { title: "14-day onboarding", body: "Systems, records and access set up, with opening balances checked." },
-        { title: "Monthly delivery", body: "Books closed, reports sent and a review call to go through the results." },
-      ],
-    },
     clients: {
       label: "Clients",
       title: "Trusted by growing businesses",
@@ -142,8 +126,26 @@ export const en = {
     sample: {
       label: "Sample report",
       title: "See what lands in your inbox every month",
-      lead: "Profitability by branch, a detailed P&L and recommended actions, in one clear pack.",
-      cta: "View sample report",
+      open: "View larger",
+      close: "Close",
+      items: [
+        {
+          title: "Profitability by branch",
+          body: "Revenue, EBITDA and net profit by month.",
+          alt: "Sample branch profitability page with revenue, EBITDA and net profit charts, client details hidden",
+        },
+        {
+          title: "Detailed monthly P&L",
+          body: "Every cost line, month by month, with margins.",
+          alt: "Sample detailed monthly P&L table with figures blurred",
+        },
+        {
+          title: "Conclusion and actions",
+          body: "What the numbers mean and what to do next.",
+          alt: "Sample conclusion page with key findings and recommended actions, figures blurred",
+        },
+      ],
+      note: "Sample from a client engagement. Client name, locations and figures are hidden for confidentiality.",
     },
     faq: {
       label: "FAQ",
@@ -151,29 +153,22 @@ export const en = {
       items: [
         {
           q: "What does Numbers First do?",
-          a: "Numbers First offers two financial services for small and medium businesses in Saudi Arabia: Accounting & Bookkeeping (monthly bookkeeping, VAT and Zakat returns, ZATCA e-invoicing, payroll and WPS) and Financial Planning & Advisory (budgeting, cash-flow forecasting, pricing, margin, lease and expansion decisions).",
+          a: "Two services for Saudi SMEs: monthly accounting and bookkeeping, and financial planning and advisory.",
         },
         {
-          q: "Who do you work with?",
-          a: "Small and medium businesses across Saudi Arabia, including healthcare, retail and e-commerce, hospitality, food and beverage, sports and fitness, consulting, and design and workspace businesses.",
+          q: "How much does it cost?",
+          a: "Bookkeeping is a fixed monthly fee of SAR 1,000 to 5,000, set by your balance sheet size and excluding 15% VAT. Advisory projects get a fixed fee after we review your plan.",
         },
         {
-          q: "How much do your services cost?",
-          a: "Bookkeeping packages are a fixed monthly fee from SAR 1,000 to SAR 5,000, set by the value of your balance sheet. Fees exclude 15% VAT. Backlog clean-up and system setup are quoted as a one-off fee.",
+          q: "How do we start?",
+          a: "Book a free assessment or send your business plan. You get a written proposal, then onboarding takes 14 days.",
         },
-        {
-          q: "How do I get started?",
-          a: "Book a free assessment. We review your books and compliance position, send a written fixed-fee proposal, complete onboarding in 14 days, then close your books and send reports every month.",
-        },
-        {
-          q: "How quickly do you reply?",
-          a: "We reply within one working day. You can reach us on WhatsApp or by phone at +966 59 856 5877, or by email at info@numberfirst.pro.",
-        },
+        { q: "How fast do you reply?", a: "Within one working day, by WhatsApp, phone or email." },
       ],
     },
     cta: {
       title: "Start with a look at your books",
-      lead: "Tell us about your business. We'll review your records and compliance and come back with a fixed-fee proposal.",
+      lead: "Tell us about your business. We will review your records and compliance and come back with a fixed-fee proposal.",
     },
   },
 
@@ -181,59 +176,71 @@ export const en = {
     meta: {
       title: "Bookkeeping, VAT & Zakat Services in Saudi Arabia | Numbers First",
       description:
-        "Monthly bookkeeping, VAT and Zakat returns, ZATCA e-invoicing on Fatoora, payroll and WPS for Saudi SMEs. Fixed monthly fees from SAR 1,000.",
+        "Books closed, returns filed, every month. Monthly bookkeeping, VAT and Zakat, ZATCA e-invoicing and payroll (WPS) for Saudi SMEs, for a fixed monthly fee from SAR 1,000.",
     },
     hero: {
       label: "Accounting & Bookkeeping",
       titleA: "Books closed.",
       titleB: "Returns filed.",
       titleC: "Every month.",
-      lead: "Accurate monthly books, ZATCA-ready compliance and clear reports for Saudi small and medium businesses. One fixed monthly fee, from SAR 1,000.",
+      lead: "Your bookkeeping journey in five steps. Each step shows what you give us and what you get back.",
     },
+    /* Animated card in the hero: what every monthly close delivers (steps 4 and 5 of the journey). */
     checklist: {
       title: "Monthly close",
-      period: "This month",
+      period: "Every month",
       items: [
-        "Transactions recorded",
-        "Bank accounts reconciled",
-        "E-invoices on Fatoora",
-        "Payroll paid through WPS",
-        "VAT return prepared",
-        "Books closed, reports sent",
+        "Books reconciled and closed",
+        "VAT, Zakat and WPS handled on time",
+        "P&L, balance sheet and cash-flow pack",
+        "Clear actions for next month",
       ],
-      done: "Ready for your review call",
+      done: "Numbers you can read, and a call to go through them.",
     },
-    services: {
-      label: "What's included",
-      title: "Everything your finance function needs, outsourced",
-      lead: "We keep the books and handle compliance, so you can run the business.",
-      items: [
+    journey: {
+      label: "Bookkeeping journey",
+      cta: "See packages",
+      steps: [
         {
-          title: "Monthly bookkeeping",
-          body: "Every transaction recorded, reconciled and closed each month, so your books are always current.",
+          name: "Free assessment",
+          when: "Day 1",
+          kicker: "Step 1",
+          desc: "A quick look at where your books and compliance stand today.",
+          give: ["Recent bank statements", "Your VAT number and CR", "A short call with us"],
+          get: ["A gap report on your books", "VAT and ZATCA readiness check"],
         },
         {
-          title: "VAT, Zakat and e-invoicing",
-          body: "Returns prepared and filed on time, with your invoicing connected to ZATCA's Fatoora platform.",
+          name: "Fixed-fee proposal",
+          when: "After the call",
+          kicker: "Step 2",
+          desc: "One clear price, set by the size of your balance sheet.",
+          give: ["Number of staff and branches", "Rough monthly transactions"],
+          get: ["Written scope of work", "One fixed monthly fee, from SAR 1,000"],
         },
         {
-          title: "Payroll and WPS",
-          body: "Salary processing and Mudad compliance, including end-of-service calculations.",
+          name: "Onboarding",
+          when: "14 days",
+          kicker: "Step 3",
+          desc: "We set everything up so the first month closes cleanly.",
+          give: ["Access to your bank and accounting system", "Opening balances and past records"],
+          get: ["Systems and Fatoora e-invoicing set up", "Opening balances checked"],
         },
         {
-          title: "Management reports",
-          body: "A monthly P&L, balance sheet and cash-flow pack that shows where the money goes.",
+          name: "Monthly close",
+          when: "Every month",
+          kicker: "Step 4",
+          desc: "Every transaction recorded, reconciled and closed.",
+          give: ["Receipts and invoices for the month", "Payroll changes"],
+          get: ["Books reconciled and closed", "VAT, Zakat and WPS handled on time"],
         },
-      ],
-    },
-    compliance: {
-      label: "Saudi compliance",
-      title: "Built around ZATCA, VAT, Zakat and WPS",
-      items: [
-        { tag: "ZATCA", title: "E-invoicing", body: "Your invoicing connected to the Fatoora platform." },
-        { tag: "VAT", title: "VAT returns", body: "Prepared and filed on time." },
-        { tag: "Zakat", title: "Annual Zakat filing", body: "Prepared from closed, reconciled books." },
-        { tag: "WPS", title: "Payroll & Mudad", body: "Salaries processed, end-of-service calculated." },
+        {
+          name: "Reports & review",
+          when: "Every month",
+          kicker: "Step 5",
+          desc: "Numbers you can read, and a call to go through them.",
+          give: ["Time for a monthly review call"],
+          get: ["P&L, balance sheet and cash-flow pack", "Clear actions for next month"],
+        },
       ],
     },
     packages: {
@@ -280,11 +287,13 @@ export const en = {
       ],
       note: "Fees exclude 15% VAT. Backlog clean-up and system setup are quoted as a one-off fee.",
     },
+    /* Cross-link to the other solution, using its card copy from the home page. */
     advisoryBridge: {
-      title: "Ready to plan ahead?",
-      body: "Once your books are accurate, the same numbers can drive budgets, forecasts and decisions.",
-      cta: "Explore Financial Planning & Advisory",
+      title: "Financial Planning & Advisory",
+      body: "Choose this if you are planning a new business, a branch or an investment and need the numbers to decide.",
+      cta: "See the journey →",
     },
+    /* Below the fold and collapsed; answers the questions people put to search and AI assistants. */
     faq: {
       label: "FAQ",
       title: "Accounting & bookkeeping questions",
@@ -295,7 +304,7 @@ export const en = {
         },
         {
           q: "Do you handle ZATCA e-invoicing on the Fatoora platform?",
-          a: "Yes. We connect your invoicing to ZATCA's Fatoora platform, and ZATCA e-invoicing support is included from the Growth package. Your free assessment includes an e-invoicing readiness check.",
+          a: "Yes. We set up your invoicing on ZATCA's Fatoora platform during onboarding, and ZATCA e-invoicing support is included from the Growth package. Your free assessment includes an e-invoicing readiness check.",
         },
         {
           q: "Do you prepare and file VAT and Zakat returns?",
@@ -315,7 +324,7 @@ export const en = {
         },
         {
           q: "When does a business have to register for VAT in Saudi Arabia?",
-          a: "VAT registration is mandatory once taxable supplies exceed SAR 375,000 over the past 12 months, or are expected to in the next 12. Businesses above SAR 187,500 can register voluntarily. The standard VAT rate is 15%. Numbers First can check your position as part of the free assessment.",
+          a: "VAT registration is mandatory once taxable supplies exceed SAR 375,000 over the past 12 months, or are expected to in the next 12. Businesses above SAR 187,500 can register voluntarily. The standard VAT rate is 15%. We check your position as part of the free assessment.",
         },
         {
           q: "How often are VAT returns filed in Saudi Arabia, and when are they due?",
@@ -323,7 +332,7 @@ export const en = {
         },
         {
           q: "When is the Zakat return due?",
-          a: "The annual Zakat return is filed with ZATCA within 120 days of your financial year-end. Numbers First prepares it from closed, reconciled books, and annual Zakat filing is included from the Starter package.",
+          a: "The annual Zakat return is filed with ZATCA within 120 days of your financial year-end. We prepare it from closed, reconciled books, and annual Zakat filing is included from the Starter package.",
         },
         {
           q: "What are ZATCA e-invoicing Phase 1 and Phase 2?",
@@ -331,23 +340,19 @@ export const en = {
         },
       ],
     },
-    cta: {
-      title: "Get your books and compliance in order",
-      lead: "Start with a free review of your bookkeeping, VAT position and ZATCA e-invoicing readiness.",
-    },
   },
 
   advisory: {
     meta: {
       title: "Financial Planning & Advisory for Saudi SMEs | Numbers First",
       description:
-        "Budgets, cash-flow forecasts, pricing, margin, lease and expansion advice for Saudi businesses in sports and fitness, real estate, F&B, hospitality, consultancy and creative industries.",
+        "Business plans, investment appraisal (payback, NPV, IRR), budgets and budget-versus-actual monitoring for Saudi SMEs. One fixed project fee, agreed upfront.",
     },
     hero: {
       label: "Financial Planning & Advisory",
       titleA: "Decisions backed by",
       titleB: "your own numbers.",
-      lead: "Budgets and cash-flow forecasts you can act on, and clear answers on pricing, margins, leases and expansion.",
+      lead: "Your advisory journey in five waypoints, from business plan to controls. Each step shows what you give us and what you get back.",
     },
     chart: {
       actual: "Actual",
@@ -355,141 +360,128 @@ export const en = {
       budget: "Budget",
       caption: "Budget vs actual, reviewed monthly",
     },
-    services: {
-      label: "What we do",
-      title: "From monthly numbers to next decisions",
-      lead: "We turn the numbers into decisions, so you can run the business.",
-      items: [
+    journey: {
+      label: "Advisory journey",
+      cta: "Send your business plan",
+      steps: [
         {
-          title: "Budgeting and forecasting",
-          body: "Budgets and cash-flow forecasts you can act on, reviewed against actuals every month.",
+          name: "Financial planning",
+          when: "Waypoint 01",
+          kicker: "Waypoint 01",
+          desc: "Will the numbers work?",
+          give: ["Your business idea or plan", "Expected costs and prices"],
+          get: ["3 to 5 year P&L and cash-flow forecast", "Break-even point and funding need"],
         },
         {
-          title: "Pricing and margins",
-          body: "Pricing and margin decisions, backed by your own numbers.",
+          name: "Investment",
+          when: "Waypoint 02",
+          kicker: "Waypoint 02",
+          desc: "Is it worth the money?",
+          give: ["Set-up cost quotes", "How you plan to fund it"],
+          get: ["Payback, NPV and IRR", "Investor- and bank-ready summary"],
         },
         {
-          title: "Lease and expansion decisions",
-          body: "Clear analysis before you sign a lease, open a branch or expand.",
+          name: "Budgeting",
+          when: "Waypoint 03",
+          kicker: "Waypoint 03",
+          desc: "What should each month look like?",
+          give: ["Your team and branch structure", "Sales targets"],
+          get: ["Monthly budget by branch", "Cash-flow budget and KPI targets"],
         },
         {
-          title: "Profitability by branch",
-          body: "Revenue, EBITDA and net profit by month, so you see which locations carry the business.",
+          name: "Monitor",
+          when: "Waypoint 04",
+          kicker: "Waypoint 04",
+          desc: "Are we on track?",
+          give: ["Monthly actuals, or we keep your books"],
+          get: ["Budget-versus-actual report", "Gaps explained and forecast updated"],
         },
         {
-          title: "CFO-lite review",
-          body: "A regular review of results with recommended actions: what the numbers mean and what to do next.",
-        },
-        {
-          title: "Audit liaison and board pack",
-          body: "Board-ready reporting and a single point of contact for your auditors.",
+          name: "Controls",
+          when: "Waypoint 05",
+          kicker: "Waypoint 05",
+          desc: "Is the business protected as it grows?",
+          give: ["How approvals and purchases work today"],
+          get: ["Approval limits and authority matrix", "Cash, purchasing and stock controls"],
         },
       ],
     },
     industries: {
-      label: "Industry expertise",
-      title: "We know the numbers behind your sector",
-      lead: "Each industry has its own cost lines, margins and growth decisions. These are the questions we help answer most.",
-      focusLabel: "Where we help",
-      items: [
-        {
-          key: "sports",
-          name: "Sports & Fitness",
-          summary: "Gyms, studios, academies and court venues.",
-          focus: ["Membership and session pricing", "Profitability by branch or venue", "Expansion and new-site decisions"],
-        },
-        {
-          key: "realestate",
-          name: "Real Estate",
-          summary: "Property owners, developers and managers.",
-          focus: ["Cash-flow forecasts for projects and portfolios", "Lease and rental decisions", "Budgets reviewed against actuals"],
-        },
-        {
-          key: "fnb",
-          name: "F&B",
-          summary: "Cafés, restaurants and food brands.",
-          focus: ["Menu pricing and margins", "Profitability by branch", "Lease and new-outlet decisions"],
-        },
-        {
-          key: "hospitality",
-          name: "Hospitality",
-          summary: "Hotels, serviced stays and venues.",
-          focus: ["Budgets and cash-flow forecasts", "Every cost line, month by month, with margins", "Expansion decisions"],
-        },
-        {
-          key: "consultancy",
-          name: "Consultancy",
-          summary: "Management, professional and advisory firms.",
-          focus: ["Fee pricing and project margins", "Cash-flow forecasting", "Budgets you can act on"],
-        },
-        {
-          key: "creative",
-          name: "Design & Creative",
-          summary: "Design studios, agencies and creative workspaces.",
-          focus: ["Project pricing and margins", "Cash-flow between projects", "Studio and workspace lease decisions"],
-        },
-      ],
+      label: "Industries we know",
+      items: ["Sports & fitness", "Real estate", "Food and beverage (F&B)", "Hospitality", "Consultancy", "Design & creative"],
     },
-    sample: {
-      label: "Sample report",
-      title: "Your monthly financial outlook",
-      lead: "Every month you receive a clear pack: profitability by branch, a detailed P&L and recommended actions. Open any page to view it larger.",
-      open: "View larger",
-      close: "Close",
-      items: [
-        {
-          title: "Profitability by branch",
-          body: "Revenue, EBITDA and net profit by month.",
-          alt: "Sample branch profitability page with revenue, EBITDA and net profit charts, client details hidden",
-        },
-        {
-          title: "Detailed monthly P&L",
-          body: "Every cost line, month by month, with margins.",
-          alt: "Sample detailed monthly P&L table with figures blurred",
-        },
-        {
-          title: "Conclusion and actions",
-          body: "What the numbers mean and what to do next.",
-          alt: "Sample conclusion page with key findings and recommended actions, figures blurred",
-        },
-      ],
-      note: "Sample from a client engagement. Client name, locations and figures are hidden for confidentiality.",
+    plan: {
+      label: "Financial planning request",
+      title: "Send us your business plan",
+      lead: "Share a short brief and your plan. We will review it and reply with a scope, a timeline and a fixed project fee.",
+      checks: ["Review of your plan and assumptions", "Recommended waypoints for your stage", "Fixed project fee before any work starts"],
+      fields: {
+        name: "Your name",
+        company: "Company",
+        phone: "Phone or WhatsApp",
+        email: "Email address",
+        brief: "Brief of the business plan",
+        briefPlaceholder: "What is the business, where will it operate, and what do you need from us?",
+        file: "Attach the business plan",
+        fileNote: "PDF, Word, Excel or PowerPoint, up to 10 MB.",
+        budget: "Total budget for the business plan",
+        timing: "How soon do you want it?",
+      },
+      budgets: ["Under SAR 250K", "SAR 250K to 1M", "SAR 1M to 5M", "SAR 5M to 20M", "Above SAR 20M", "Not decided yet"],
+      timings: ["Within 1 week", "Within 2 weeks", "Within a month", "In 1 to 3 months", "Just exploring"],
+      errors: {
+        name: "Please enter your name.",
+        phone: "Please enter a phone or WhatsApp number.",
+        brief: "Please add a short brief of the plan.",
+        file: "The file is larger than 10 MB.",
+      },
+      submit: "Send my business plan",
+      readyTitle: "Your request is ready.",
+      readyBody: "Send it to us on WhatsApp or by email, and attach your business plan.",
+      summary: {
+        heading: "Financial planning request - Numbers First",
+        subject: "Financial planning request",
+        name: "Name",
+        company: "Company",
+        phone: "Phone/WhatsApp",
+        email: "Email",
+        brief: "Brief of business plan",
+        budget: "Total budget",
+        timing: "Needed",
+        file: "File",
+        attaching: "(attaching)",
+      },
     },
-    foundation: {
-      label: "Built on accurate books",
-      title: "Advice is only as good as the numbers under it",
-      body: "Cash-flow forecasting, a CFO-lite review and a board pack are part of our Premium package, on top of monthly bookkeeping. Tell us what you need in your free assessment and the scope goes into your written proposal.",
-      cta: "See Accounting & Bookkeeping packages",
+    accountingBridge: {
+      title: "Accounting & Bookkeeping",
+      body: "Choose this if you need your books closed every month and VAT, Zakat, ZATCA and WPS handled on time.",
+      cta: "See the journey →",
     },
     faq: {
       label: "FAQ",
       title: "Financial planning & advisory questions",
       items: [
         {
-          q: "What does your financial advisory service cover?",
-          a: "Budgeting and cash-flow forecasting reviewed against actuals every month, pricing and margin decisions, lease and expansion decisions, profitability by branch, a CFO-lite review with recommended actions, and audit liaison with a board pack.",
+          q: "What does your financial planning and advisory service cover?",
+          a: "Five waypoints, from business plan to controls: financial planning (3 to 5 year P&L and cash-flow forecast, break-even and funding need), investment appraisal (payback, NPV and IRR), budgeting by branch, monthly budget-versus-actual monitoring, and financial controls such as approval limits and an authority matrix.",
         },
         {
-          q: "Which industries do you advise?",
-          a: "We focus on sports and fitness, real estate, food and beverage (F&B), hospitality, consultancy, and design and creative businesses in Saudi Arabia.",
-        },
-        {
-          q: "What will I receive each month?",
-          a: "A monthly financial outlook pack: profitability by branch (revenue, EBITDA and net profit by month), a detailed P&L with every cost line and margin, and a conclusion with recommended actions.",
+          q: "Who is it for?",
+          a: "Saudi businesses planning a new venture, a new branch or an investment that need the numbers before they decide. We know sports and fitness, real estate, food and beverage (F&B), hospitality, consultancy, and design and creative businesses.",
         },
         {
           q: "How is financial advisory priced?",
-          a: "Cash-flow forecasting, a CFO-lite review, audit liaison and a board pack are part of the Premium package at SAR 5,000 a month, alongside monthly bookkeeping. Otherwise, tell us what you need in the free assessment and the scope goes into your written proposal.",
+          a: "One fixed project fee. We review your business plan first, then reply with a scope, a timeline and the fee before any work starts.",
         },
         {
-          q: "Do I need accurate books before advisory?",
-          a: "Advice is only as good as the numbers under it, so our advisory work builds on accurate monthly books. If your books need work, we can take on the bookkeeping too.",
+          q: "Can you prepare the financial side of a feasibility study for investors or a bank?",
+          a: "Yes. The investment waypoint gives you payback, NPV and IRR, with an investor- and bank-ready summary built on a 3 to 5 year forecast.",
+        },
+        {
+          q: "Do I need to use your bookkeeping as well?",
+          a: "No. For budget-versus-actual monitoring we work from your monthly actuals, or we can keep your books for you with an Accounting & Bookkeeping package.",
         },
       ],
-    },
-    cta: {
-      title: "Bring us the decision you're facing",
-      lead: "Pricing, a new branch, a lease or next year's budget. Tell us what's on the table and we'll show you how we'd approach it.",
     },
   },
 
@@ -497,96 +489,33 @@ export const en = {
     meta: {
       title: "Book a Free Bookkeeping Assessment | Numbers First",
       description:
-        "Tell us about your business. We'll review your records and compliance and come back with a fixed-fee proposal.",
+        "Tell us about your business. We will review your records and compliance and come back with a fixed-fee proposal.",
     },
     label: "Free assessment",
     title: "Start with a look at your books",
-    lead: "Tell us about your business. We'll review your records and compliance and come back with a fixed-fee proposal.",
-    checks: [
-      "Review of your bookkeeping and VAT position",
-      "ZATCA e-invoicing readiness check",
-      "Written proposal with a fixed monthly fee",
-    ],
-    steps: ["Solution", "Your business", "Send"],
-    stepOf: "Step {n} of {total}",
-    q1: "What can we help you with?",
-    options: {
-      accounting: { title: "Accounting & Bookkeeping", body: "Books, VAT, Zakat, e-invoicing, payroll" },
-      advisory: { title: "Financial Planning & Advisory", body: "Budgets, forecasts, pricing, expansion" },
-      both: { title: "Both", body: "Accurate books and forward planning" },
-      unsure: { title: "Not sure yet", body: "We'll recommend the right fit" },
-    },
-    q2: "Tell us about your business",
+    lead: "Tell us about your business. We will review your records and compliance and come back with a fixed-fee proposal.",
+    checks: ["Review of your bookkeeping and VAT position", "ZATCA e-invoicing readiness check", "Written proposal with a fixed monthly fee"],
     fields: {
       name: "Your name",
       company: "Company",
-      phone: "Phone or WhatsApp",
-      email: "Email (optional)",
-      industry: "Industry",
       balance: "Balance sheet value",
-      needs: "What do you need help with?",
-      message: "Anything else we should know?",
-      messagePlaceholder: "For example: we're two months behind on VAT, or we're planning a second branch",
-      select: "Select",
+      phone: "Phone or WhatsApp",
+      need: "What do you need help with?",
+      needPlaceholder: "For example: monthly bookkeeping, VAT filing, ZATCA e-invoicing, payroll",
     },
-    industries: [
-      "Sports & Fitness",
-      "Real Estate",
-      "F&B",
-      "Hospitality",
-      "Consultancy",
-      "Design & Creative",
-      "Healthcare",
-      "Retail and e-commerce",
-      "Other",
-    ],
     balances: ["Under SAR 500K", "SAR 500K to 1M", "SAR 1M to 3M", "Above SAR 3M", "Not sure"],
-    needs: {
-      accounting: [
-        "Monthly bookkeeping",
-        "VAT and Zakat returns",
-        "ZATCA e-invoicing",
-        "Payroll and WPS",
-        "Management reports",
-        "Backlog clean-up",
-      ],
-      advisory: [
-        "Budgeting and forecasting",
-        "Cash-flow forecast",
-        "Pricing and margins",
-        "Lease or expansion decision",
-        "Profitability by branch",
-        "CFO-lite review",
-      ],
-    },
-    errors: {
-      path: "Choose an option to continue.",
-      name: "Please enter your name.",
-      phone: "Please enter a phone or WhatsApp number.",
-      email: "That email address doesn't look right.",
-    },
-    back: "Back",
-    next: "Continue",
-    review: "Prepare my request",
-    q3: "Your request is ready",
-    q3lead: "Send it to us on WhatsApp or by email. We reply within one working day.",
-    sendWhatsapp: "Send on WhatsApp",
-    sendEmail: "Email us",
-    copy: "Copy request",
-    copied: "Copied",
-    edit: "Edit details",
+    errors: { name: "Please enter your name." },
+    submit: "Prepare my request",
+    readyTitle: "Your request is ready.",
+    readyBody: "Copy it and send it to us on WhatsApp or by email.",
     summary: {
       heading: "Free assessment request - Numbers First",
       subject: "Free assessment request",
-      solution: "Solution",
       name: "Name",
       company: "Company",
-      phone: "Phone/WhatsApp",
-      email: "Email",
-      industry: "Industry",
       balance: "Balance sheet",
-      needs: "Needs",
-      message: "Notes",
+      phone: "Phone/WhatsApp",
+      need: "Needs",
     },
     direct: "Prefer to talk now?",
   },

@@ -57,7 +57,7 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
         </div>
       </div>
 
-      <div className="mt-14 grid gap-5 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]" dir="ltr">
+      <div className="mt-10 grid gap-5 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]" dir="ltr">
         {rows.map((row, r) => (
           <div key={r} className="flex overflow-hidden">
             <ul data-track className="flex shrink-0 gap-5 pe-5">
@@ -72,8 +72,12 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
                     alt={i < row.length ? `${c.name} ${t.logoSuffix}` : ""}
                     width={c.w}
                     height={c.h}
-                    className="h-full w-full object-contain"
+                    /* Fixed caps (card height minus padding): a percentage height doesn't resolve inside the grid card,
+                       so tall logos were overflowing and getting cut off at the bottom. */
+                    className="h-auto max-h-[88px] w-auto max-w-full object-contain sm:max-h-[104px]"
                     sizes="240px"
+                    // Small files; loaded up front so cards sliding in from off-screen aren't briefly empty.
+                    loading="eager"
                   />
                 </li>
               ))}
@@ -82,7 +86,7 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
         ))}
       </div>
 
-      <div className="wrap mt-14">
+      <div className="wrap mt-10">
         <p className="text-xs font-bold tracking-[0.18em] text-[#4c565c] uppercase rtl:tracking-normal">{t.sectorsLabel}</p>
         <ul className="mt-4 flex flex-wrap gap-2.5" aria-label={t.sectorsLabel}>
           {t.sectors.map((s) => (

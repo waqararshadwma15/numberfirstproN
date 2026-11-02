@@ -21,7 +21,7 @@ export function CtaBand({ lang, common, title, lead, path }: Props) {
       <div className="wrap">
         <div
           data-reveal="scale"
-          className="grain relative overflow-hidden rounded-[32px] border border-line bg-surface px-6 py-14 sm:px-12 md:py-20"
+          className="grain relative overflow-hidden rounded-[32px] border border-line bg-surface px-6 py-12 sm:px-12 md:py-16"
         >
           <div
             aria-hidden
@@ -39,7 +39,7 @@ export function CtaBand({ lang, common, title, lead, path }: Props) {
                   {common.cta.assessment}
                   <ArrowRight size={18} className="arrow" />
                 </Link>
-                <a href={waLink()} target="_blank" rel="noopener" className="btn btn-line">
+                <a href={waLink(common.waGreeting)} target="_blank" rel="noopener" className="btn btn-line">
                   <WhatsAppIcon size={18} />
                   {common.cta.whatsapp}
                 </a>
