@@ -65,8 +65,9 @@ export function organizationGraph(lang: Locale) {
           "@type": "OfferCatalog",
           name: t.common.footer.solutions,
           itemListElement: [
-            { "@type": "Offer", itemOffered: { "@id": `${site.url}/${lang}/accounting#service` } },
-            { "@type": "Offer", itemOffered: { "@id": `${site.url}/${lang}/advisory#service` } },
+            // Named here too: each full Service node is only on its own page, so a bare @id wouldn't resolve elsewhere.
+            { "@type": "Offer", itemOffered: { "@type": "Service", "@id": `${site.url}/${lang}/accounting#service`, name: t.common.nav.accounting } },
+            { "@type": "Offer", itemOffered: { "@type": "Service", "@id": `${site.url}/${lang}/advisory#service`, name: t.common.nav.advisory } },
           ],
         },
         knowsLanguage: ["en", "ar"],
@@ -106,7 +107,7 @@ export function organizationGraph(lang: Locale) {
 }
 
 /* Content date for WebPage nodes; keep in step with LAST_UPDATED in app/sitemap.ts. */
-const DATE_MODIFIED = "2026-11-02";
+const DATE_MODIFIED = "2026-11-04";
 
 /**
  * The page itself, tied to the site and the business. Answer engines read `about`, `mainEntity`

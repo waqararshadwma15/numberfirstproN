@@ -42,15 +42,14 @@ export function PackagesSelector({ lang, t }: Props) {
             <p aria-hidden className="mb-4 text-sm font-semibold">
               {t.selector}
             </p>
-            <div role="radiogroup" aria-label={t.selector} className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2">
               {t.ranges.map((r, i) => (
                 <button
                   key={r}
                   type="button"
-                  role="radio"
-                  aria-checked={match === i}
+                  aria-pressed={match === i}
                   onClick={() => choose(i)}
-                  className="min-h-12 rounded-xl border border-line px-3 py-2.5 text-sm font-medium text-muted transition-colors hover:border-gold/60 hover:text-fg aria-checked:border-gold aria-checked:bg-gold aria-checked:text-on-gold"
+                  className="min-h-12 rounded-xl border border-line px-3 py-2.5 text-sm font-medium text-muted transition-colors hover:border-gold/60 hover:text-fg aria-pressed:border-gold aria-pressed:bg-gold aria-pressed:text-on-gold"
                 >
                   {r}
                 </button>

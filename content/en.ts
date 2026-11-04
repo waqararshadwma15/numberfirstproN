@@ -8,7 +8,7 @@ export const en = {
   meta: {
     siteTitle: "Numbers First | Bookkeeping & Financial Advisory in Saudi Arabia",
     siteDescription:
-      "Monthly bookkeeping, VAT and Zakat filing, ZATCA e-invoicing and payroll (WPS), plus financial planning and advisory for Saudi SMEs. Fixed fees from SAR 1,000 a month.",
+      "Monthly bookkeeping, VAT and Zakat filing, ZATCA e-invoicing, payroll (WPS) and financial advisory for Saudi SMEs. Fixed fees from SAR 1,000 a month.",
   },
   common: {
     brand: "NUMBERS FIRST",
@@ -50,6 +50,7 @@ export const en = {
       rights: "© 2026 Numbers First. Fees exclude 15% VAT.",
       solutions: "Solutions",
       company: "Company",
+      privacy: "Privacy policy",
     },
     notFound: {
       title: "This page isn't on the books",
@@ -74,6 +75,9 @@ export const en = {
       copy: "Copy request",
       copied: "Copied",
       empty: "-",
+      choose: "Select an option",
+      consent: "By sending this request you agree to our",
+      privacyLink: "privacy policy",
     },
   },
 
@@ -126,6 +130,8 @@ export const en = {
         "Design and workspaces",
       ],
       logoSuffix: "logo",
+      pause: "Pause logos",
+      play: "Play logos",
     },
     sample: {
       label: "Sample report",
@@ -180,7 +186,7 @@ export const en = {
     meta: {
       title: "Bookkeeping, VAT & Zakat Services in Saudi Arabia | Numbers First",
       description:
-        "Books closed, returns filed, every month. Monthly bookkeeping, VAT and Zakat, ZATCA e-invoicing and payroll (WPS) for Saudi SMEs, for a fixed monthly fee from SAR 1,000.",
+        "Monthly bookkeeping, VAT and Zakat, ZATCA e-invoicing and payroll (WPS) for Saudi SMEs. Books closed and returns filed for a fixed fee from SAR 1,000 a month.",
     },
     hero: {
       label: "Accounting & Bookkeeping",
@@ -435,9 +441,12 @@ export const en = {
       timings: ["Within 1 week", "Within 2 weeks", "Within a month", "In 1 to 3 months", "Just exploring"],
       errors: {
         name: "Please enter your name.",
-        phone: "Please enter a phone or WhatsApp number.",
+        phone: "Please enter a valid phone or WhatsApp number.",
+        email: "Please enter a valid email address, or leave it empty.",
         brief: "Please add a short brief of the plan.",
+        briefLong: "Please keep the brief under 4,000 characters and attach the rest as a file.",
         file: "The file is larger than 10 MB.",
+        fileType: "Please attach a PDF, Word, Excel or PowerPoint file.",
       },
       submit: "Send my business plan",
       readyTitle: "Your request is ready.",
@@ -504,24 +513,71 @@ export const en = {
       company: "Company",
       balance: "Balance sheet value",
       phone: "Phone or WhatsApp",
+      email: "Email address",
       need: "What do you need help with?",
       needPlaceholder: "For example: monthly bookkeeping, VAT filing, ZATCA e-invoicing, payroll",
     },
     balances: ["Under SAR 500K", "SAR 500K to 1M", "SAR 1M to 3M", "Above SAR 3M", "Not sure"],
-    errors: { name: "Please enter your name." },
-    submit: "Prepare my request",
+    errors: {
+      name: "Please enter your name.",
+      phone: "Please enter a valid phone or WhatsApp number.",
+      email: "Please enter a valid email address, or leave it empty.",
+      needLong: "Please keep this under 4,000 characters.",
+    },
+    submit: "Send my request",
     readyTitle: "Your request is ready.",
     readyBody: "Copy it and send it to us on WhatsApp or by email.",
     summary: {
       heading: "Free assessment request - Numbers First",
       subject: "Free assessment request",
+      service: "Service",
+      services: { accounting: "Accounting & Bookkeeping", advisory: "Financial Planning & Advisory" },
       name: "Name",
       company: "Company",
       balance: "Balance sheet",
       phone: "Phone/WhatsApp",
+      email: "Email",
       need: "Needs",
     },
     direct: "Prefer to talk now?",
+  },
+
+  /* Draft for legal review before it is relied on. States only what the site actually does. */
+  privacy: {
+    meta: {
+      title: "Privacy Policy | Numbers First",
+      description: "What Numbers First collects through this website, why we collect it, who handles it and how to ask us to access, correct or delete it.",
+    },
+    label: "Privacy",
+    title: "Privacy policy",
+    updated: "Last updated: 4 November 2026",
+    sections: [
+      {
+        title: "What we collect",
+        body: "When you send a request through this website we receive what you enter: your name, company, phone or WhatsApp number, email address, the details of your request, and any business plan you attach.",
+      },
+      {
+        title: "Why we use it",
+        body: "We use it to reply to you, review your request and prepare a proposal. We do not sell it or use it for unrelated marketing.",
+      },
+      {
+        title: "Who handles it",
+        body: "Requests reach us by email. The website is hosted by Vercel and our email by Hostinger, and they process this information to provide those services. If you choose to contact us on WhatsApp, WhatsApp's own terms and privacy policy also apply.",
+      },
+      {
+        title: "How long we keep it",
+        body: "We keep it for as long as we need it to deal with your request and provide our services, or for longer where the law requires.",
+      },
+      {
+        title: "Your browser",
+        body: "We store your language choice in a cookie and your light or dark theme choice in your browser, so the site remembers them. We do not use advertising or analytics cookies.",
+      },
+      {
+        title: "Your choices",
+        body: "You can ask us to show, correct or delete the personal information we hold about you by contacting us using the details below.",
+      },
+    ],
+    contact: "Questions or requests:",
   },
 };
 

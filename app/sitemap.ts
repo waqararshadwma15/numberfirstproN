@@ -7,10 +7,11 @@ const pages = [
   { path: "/accounting", priority: 0.9, changeFrequency: "monthly" },
   { path: "/advisory", priority: 0.9, changeFrequency: "monthly" },
   { path: "/enquire", priority: 0.7, changeFrequency: "yearly" },
+  { path: "/privacy", priority: 0.2, changeFrequency: "yearly" },
 ] as const;
 
 // Bump when page content changes meaningfully.
-const LAST_UPDATED = new Date("2026-11-02");
+const LAST_UPDATED = new Date("2026-11-04");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return pages.flatMap((p) =>

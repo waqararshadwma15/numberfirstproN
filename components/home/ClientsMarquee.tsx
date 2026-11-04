@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { Pause, Play } from "lucide-react";
 import type { Dict } from "@/lib/i18n";
 import { clients } from "@/lib/site";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
@@ -10,6 +11,14 @@ import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
   const scope = useRef<HTMLElement>(null);
   const rows = [clients.slice(0, 6), clients.slice(6)];
+  const tweens = useRef<gsap.core.Tween[]>([]);
+  const [paused, setPaused] = useState(false);
+
+  const togglePause = () => {
+    const next = !paused;
+    setPaused(next);
+    tweens.current.forEach((tween) => tween.paused(next));
+  };
 
   useGSAP(
     () => {
@@ -24,6 +33,7 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
             { xPercent: forward ? 0 : -50 },
             { xPercent: forward ? -50 : 0, duration: 38, ease: "none", repeat: -1 },
           );
+          tweens.current[i] = tween;
           const row = track.parentElement!;
           const slow = () => gsap.to(tween, { timeScale: 0.15, duration: 0.6 });
           const resume = () => gsap.to(tween, { timeScale: 1, duration: 0.6 });
@@ -45,7 +55,8 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
     <section ref={scope} id="clients" className="band overflow-hidden bg-paper text-[#13181a]">
       <div className="wrap">
         <div className="max-w-3xl">
-          <p data-reveal className="eyebrow !text-gold-deep">
+          {/* A fixed colour: this section stays on light paper in both themes. */}
+          <p data-reveal className="eyebrow !text-[#7d5900]">
             {t.label}
           </p>
           <h2 data-reveal className="h2">
@@ -60,12 +71,13 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
       <div className="mt-10 grid gap-5 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]" dir="ltr">
         {rows.map((row, r) => (
           <div key={r} className="flex overflow-hidden">
-            <ul data-track className="flex shrink-0 gap-5 pe-5">
+            {/* Under reduced motion nothing drifts, so the logos wrap to keep every one of them on screen. */}
+            <ul data-track className="flex shrink-0 gap-5 pe-5 motion-reduce:w-full motion-reduce:shrink motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:ps-5">
               {[...row, ...row].map((c, i) => (
                 <li
                   key={`${c.name}-${i}`}
                   aria-hidden={i >= row.length || undefined}
-                  className="grid h-32 w-52 shrink-0 place-items-center rounded-2xl border border-black/5 bg-white p-5 shadow-[0_8px_24px_-16px_rgb(0_0_0/0.35)] sm:h-36 sm:w-60"
+                  className={`grid h-32 w-52 shrink-0 place-items-center rounded-2xl border border-black/5 bg-white p-5 shadow-[0_8px_24px_-16px_rgb(0_0_0/0.35)] sm:h-36 sm:w-60 ${i >= row.length ? "motion-reduce:hidden" : ""}`}
                 >
                   <Image
                     src={c.src}
@@ -87,6 +99,14 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
       </div>
 
       <div className="wrap mt-10">
+        <button
+          type="button"
+          onClick={togglePause}
+          className="btn mb-8 !min-h-11 border-[#13181a]/25 !px-5 !py-2.5 text-sm text-[#13181a] hover:border-[#13181a] motion-reduce:hidden"
+        >
+          {paused ? <Play size={16} aria-hidden /> : <Pause size={16} aria-hidden />}
+          {paused ? t.play : t.pause}
+        </button>
         <p className="text-xs font-bold tracking-[0.18em] text-[#4c565c] uppercase rtl:tracking-normal">{t.sectorsLabel}</p>
         <ul className="mt-4 flex flex-wrap gap-2.5" aria-label={t.sectorsLabel}>
           {t.sectors.map((s) => (

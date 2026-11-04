@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { enquireHref, type Dict, type Locale } from "@/lib/i18n";
 import { gsap, ScrollTrigger, useGSAP, REDUCED } from "@/lib/gsap";
@@ -13,6 +13,7 @@ type Props = { lang: Locale; t: Dict["common"] };
 
 export function Header({ lang, t }: Props) {
   const pathname = usePathname();
+  const router = useRouter();
   const header = useRef<HTMLElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -80,9 +81,13 @@ export function Header({ lang, t }: Props) {
     };
   }, [open]);
 
-  const saveLang = () => {
+  const saveLang = (e: MouseEvent<HTMLAnchorElement>) => {
     setOpen(false);
     document.cookie = `nf-lang=${other};path=/;max-age=31536000;samesite=lax`;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    // Keep the visitor's place and pre-selected package when they switch language.
+    e.preventDefault();
+    router.push(`${switchHref}${window.location.search}${window.location.hash}`);
   };
 
   return (
@@ -93,7 +98,7 @@ export function Header({ lang, t }: Props) {
     >
       <div className="wrap flex h-[var(--nav-h)] items-center gap-2 sm:gap-4">
         <Link href={`/${lang}`} className="flex min-w-0 items-center gap-3 me-auto lg:me-0" aria-label={`${t.brand} — ${t.nav.home}`}>
-          <Image src="/assets/mark.png" alt="" width={40} height={40} className="size-9 rounded-[9px] sm:size-10" priority />
+          <Image src="/assets/mark.png" alt="" width={40} height={40} className="size-9 rounded-[9px] sm:size-10" loading="eager" />
           <span className="font-display text-[15px] font-bold tracking-[0.14em] whitespace-nowrap max-[419px]:hidden sm:text-lg [font-family:var(--font-cormorant)]">
             {t.brand}
           </span>
@@ -146,7 +151,9 @@ export function Header({ lang, t }: Props) {
       <div
         ref={panel}
         id="mobile-menu"
-        className="fixed inset-x-0 top-[var(--nav-h)] bottom-0 hidden flex-col gap-2 overflow-y-auto bg-ink px-4 pt-6 pb-10 lg:hidden"
+        /* An explicit height, not bottom-0: once scrolled, the header's blur and transform make it this panel's
+           containing block, so bottom-0 would collapse the panel to the height of the header. */
+        className="fixed inset-x-0 top-[var(--nav-h)] hidden h-[calc(100dvh-var(--nav-h))] flex-col gap-2 overflow-y-auto bg-ink px-4 pt-6 pb-10 lg:hidden"
         style={{ clipPath: "inset(0 0 100% 0)" }}
       >
         {links.map((l, i) => (

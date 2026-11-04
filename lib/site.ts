@@ -16,7 +16,16 @@ export const site = {
    Larger files are still accepted by the form and sent by the visitor on WhatsApp or email. */
 export const MAX_ATTACHMENT = 4 * 1024 * 1024;
 
-export const waLink =(text?: string) =>
+/* Form rules, shared by the forms and the server so both agree. */
+export const ATTACHABLE = /\.(pdf|docx?|xlsx?|pptx?)$/i;
+export const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/* Long enough for a real brief, and short enough that the whole request fits one email. */
+export const MAX_BRIEF = 4000;
+/* Any digits (Arabic-Indic included), with at least seven of them. */
+export const isPhone = (value: string) =>
+  /^\+?[\p{Nd}\s()-]+$/u.test(value) && (value.match(/\p{Nd}/gu)?.length ?? 0) >= 7;
+
+export const waLink = (text?: string) =>
   `https://wa.me/${site.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
 
 export const mailLink = (subject: string, body: string) =>

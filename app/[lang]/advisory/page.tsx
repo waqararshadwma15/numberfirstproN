@@ -40,7 +40,7 @@ export default async function AdvisoryPage({ params }: PageProps<"/[lang]/adviso
       <Journey label={t.journey.label} steps={t.journey.steps} t={common.journey} cta={{ href: "#plan", label: t.journey.cta }} tone="teal">
         <IndustryChips label={t.industries.label} items={t.industries.items} />
       </Journey>
-      <PlanRequest t={t.plan} request={common.request} />
+      <PlanRequest lang={lang} t={t.plan} request={common.request} />
       <Faq label={t.faq.label} title={t.faq.title} items={t.faq.items} tone="teal" />
       <BridgeBanner
         index={common.pathIndex.accounting}

@@ -93,18 +93,20 @@ export function Journey({ label, steps, t, cta, tone, children }: Props) {
 
   return (
     <section id="journey" aria-labelledby={`${uid}-h`} className="band scroll-mt-[var(--nav-h)] pt-10 md:pt-12">
-      <div ref={root} className="wrap" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+      <div ref={root} className="wrap">
         {/* Names the section in the page outline, so the step titles (h3) sit under an h2. */}
         <h2 id={`${uid}-h`} className="sr-only">
           {label}
         </h2>
-        <ol role="tablist" aria-label={label} data-reveal className="relative grid grid-cols-5 gap-1 sm:gap-3">
+        {/* Hover pauses the steps being read. The controls stay outside it, or Play would seem to do nothing under the mouse. */}
+        <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+        <div role="tablist" aria-label={label} data-reveal className="relative grid grid-cols-5 gap-1 sm:gap-3">
           <span aria-hidden className="absolute inset-x-[10%] top-[21px] h-px bg-line sm:top-7" />
           {steps.map((s, i) => {
             const on = i === cur;
             const done = i < cur;
             return (
-              <li key={s.name} className="relative">
+              <div key={s.name} role="presentation" className="relative">
                 <button
                   ref={(el) => {
                     tabs.current[i] = el;
@@ -135,10 +137,10 @@ export function Journey({ label, steps, t, cta, tone, children }: Props) {
                     {s.when}
                   </span>
                 </button>
-              </li>
+              </div>
             );
           })}
-        </ol>
+        </div>
 
         <div className="mt-7 h-[3px] overflow-hidden rounded-full bg-line" aria-hidden>
           <span
@@ -179,12 +181,16 @@ export function Journey({ label, steps, t, cta, tone, children }: Props) {
             );
           })}
         </div>
+        </div>
 
         <div className="mt-6 flex flex-wrap items-center gap-4">
-          <button type="button" onClick={togglePlay} aria-pressed={!playing} className="btn btn-line !min-h-11 !px-5 !py-2.5 text-sm">
-            {playing ? <Pause size={16} aria-hidden /> : <Play size={16} aria-hidden />}
-            {playing ? t.pause : t.play}
-          </button>
+          {/* The steps never play by themselves under reduced motion, so a Play button would do nothing there. */}
+          {!reduced && (
+            <button type="button" onClick={togglePlay} className="btn btn-line !min-h-11 !px-5 !py-2.5 text-sm">
+              {playing ? <Pause size={16} aria-hidden /> : <Play size={16} aria-hidden />}
+              {playing ? t.pause : t.play}
+            </button>
+          )}
           <span className="text-sm text-muted">{t.hint}</span>
           <Link href={cta.href} className={`btn w-full sm:ms-auto sm:w-auto ${gold ? "btn-gold" : "btn-teal"}`}>
             {cta.label}

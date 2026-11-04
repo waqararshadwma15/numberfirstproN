@@ -2,12 +2,12 @@
 
 import { useId, useState, type FormEvent } from "react";
 import { ArrowRight, Check } from "lucide-react";
-import type { Dict } from "@/lib/i18n";
-import { MAX_ATTACHMENT } from "@/lib/site";
-import { deliver, Honeypot, RequestResult, RequestSent, type RequestStatus } from "@/components/enquire/RequestResult";
+import type { Dict, Locale } from "@/lib/i18n";
+import { ATTACHABLE, EMAIL, isPhone, MAX_ATTACHMENT, MAX_BRIEF } from "@/lib/site";
+import { Consent, deliver, Honeypot, RequestResult, RequestSent, type RequestStatus } from "@/components/enquire/RequestResult";
 
-type Props = { t: Dict["advisory"]["plan"]; request: Dict["common"]["request"] };
-type Field = "name" | "phone" | "brief" | "file";
+type Props = { lang: Locale; t: Dict["advisory"]["plan"]; request: Dict["common"]["request"] };
+type Field = "name" | "phone" | "email" | "brief" | "file";
 
 const MAX_FILE = 10 * 1024 * 1024;
 
@@ -16,7 +16,7 @@ const MAX_FILE = 10 * 1024 * 1024;
  * attached when it fits (MAX_ATTACHMENT); a larger file is named in the request and the visitor
  * sends it on WhatsApp or by email.
  */
-export function PlanRequest({ t, request }: Props) {
+export function PlanRequest({ lang, t, request }: Props) {
   const uid = useId();
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
   const [message, setMessage] = useState("");
@@ -34,12 +34,16 @@ export function PlanRequest({ t, request }: Props) {
 
     const next: Partial<Record<Field, string>> = {};
     if (!v("name")) next.name = t.errors.name;
-    if (!v("phone")) next.phone = t.errors.phone;
+    if (!isPhone(v("phone"))) next.phone = t.errors.phone;
+    if (v("email") && !EMAIL.test(v("email"))) next.email = t.errors.email;
     if (!v("brief")) next.brief = t.errors.brief;
-    if (hasFile && file.size > MAX_FILE) next.file = t.errors.file;
+    else if (v("brief").length > MAX_BRIEF) next.brief = t.errors.briefLong;
+    if (hasFile && !ATTACHABLE.test(file.name)) next.file = t.errors.fileType;
+    else if (hasFile && file.size > MAX_FILE) next.file = t.errors.file;
     setErrors(next);
     const first = Object.keys(next)[0];
     if (first) {
+      setStatus("idle");
       form.querySelector<HTMLElement>(`[data-field="${first}"]`)?.focus();
       return;
     }
@@ -53,8 +57,8 @@ export function PlanRequest({ t, request }: Props) {
       `${s.phone}: ${v("phone")}`,
       `${s.email}: ${v("email") || request.empty}`,
       `${s.brief}: ${v("brief")}`,
-      `${s.budget}: ${v("budget")}`,
-      `${s.timing}: ${v("timing")}`,
+      `${s.budget}: ${v("budget") || request.empty}`,
+      `${s.timing}: ${v("timing") || request.empty}`,
       ...(hasFile ? [`${s.file}: ${file.name}${attach ? "" : ` ${s.attaching}`}`] : []),
     ].join("\n");
     setMessage(text);
@@ -66,7 +70,10 @@ export function PlanRequest({ t, request }: Props) {
     payload.set("email", v("email"));
     payload.set("website", v("website"));
     if (attach) payload.set("plan", file);
-    setStatus(await deliver(payload));
+    const result = await deliver(payload);
+    // Clearing a sent form means a second click can't send the same request twice.
+    if (result === "sent") form.reset();
+    setStatus(result);
   };
 
   const err = (f: Field) =>
@@ -75,7 +82,12 @@ export function PlanRequest({ t, request }: Props) {
         {errors[f]}
       </p>
     ) : null;
-  const aria = (f: Field) => ({ "data-field": f, "aria-invalid": !!errors[f], "aria-describedby": errors[f] ? `${uid}-${f}-err` : undefined });
+  const aria = (f: Field) => ({
+    "data-field": f,
+    "aria-invalid": !!errors[f],
+    "aria-describedby": errors[f] ? `${uid}-${f}-err` : undefined,
+    onChange: () => errors[f] && setErrors((p) => ({ ...p, [f]: undefined })),
+  });
 
   return (
     <section id="plan" className="band relative overflow-hidden bg-surface">
@@ -107,12 +119,12 @@ export function PlanRequest({ t, request }: Props) {
           <div className="grid gap-5 sm:grid-cols-2">
             <div className="field">
               <label htmlFor={`${uid}-name`}>{t.fields.name} *</label>
-              <input id={`${uid}-name`} name="name" className="input" autoComplete="name" {...aria("name")} />
+              <input id={`${uid}-name`} name="name" className="input" autoComplete="name" maxLength={120} {...aria("name")} />
               {err("name")}
             </div>
             <div className="field">
               <label htmlFor={`${uid}-co`}>{t.fields.company}</label>
-              <input id={`${uid}-co`} name="company" className="input" autoComplete="organization" />
+              <input id={`${uid}-co`} name="company" className="input" autoComplete="organization" maxLength={150} />
             </div>
             <div className="field">
               <label htmlFor={`${uid}-ph`}>{t.fields.phone} *</label>
@@ -124,6 +136,7 @@ export function PlanRequest({ t, request }: Props) {
                 inputMode="tel"
                 className="input rtl:text-right"
                 autoComplete="tel"
+                maxLength={30}
                 placeholder="+966 5X XXX XXXX"
                 {...aria("phone")}
               />
@@ -131,7 +144,8 @@ export function PlanRequest({ t, request }: Props) {
             </div>
             <div className="field">
               <label htmlFor={`${uid}-em`}>{t.fields.email}</label>
-              <input id={`${uid}-em`} name="email" type="email" dir="ltr" className="input rtl:text-right" autoComplete="email" />
+              <input id={`${uid}-em`} name="email" type="email" dir="ltr" className="input rtl:text-right" autoComplete="email" maxLength={200} {...aria("email")} />
+              {err("email")}
             </div>
           </div>
           <div className="field">
@@ -159,6 +173,7 @@ export function PlanRequest({ t, request }: Props) {
             <div className="field">
               <label htmlFor={`${uid}-bud`}>{t.fields.budget}</label>
               <select id={`${uid}-bud`} name="budget" className="input">
+                <option value="">{request.choose}</option>
                 {t.budgets.map((o) => (
                   <option key={o}>{o}</option>
                 ))}
@@ -167,6 +182,7 @@ export function PlanRequest({ t, request }: Props) {
             <div className="field">
               <label htmlFor={`${uid}-when`}>{t.fields.timing}</label>
               <select id={`${uid}-when`} name="timing" className="input">
+                <option value="">{request.choose}</option>
                 {t.timings.map((o) => (
                   <option key={o}>{o}</option>
                 ))}
@@ -174,6 +190,7 @@ export function PlanRequest({ t, request }: Props) {
             </div>
           </div>
           <Honeypot />
+          <Consent lang={lang} t={request} />
           <button type="submit" disabled={status === "sending"} className="btn btn-teal disabled:cursor-wait disabled:opacity-70 sm:justify-self-start">
             {status === "sending" ? request.sending : t.submit}
             <ArrowRight size={18} className="arrow" />

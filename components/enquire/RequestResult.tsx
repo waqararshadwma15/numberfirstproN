@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { Check, Copy, Mail } from "lucide-react";
-import type { Dict } from "@/lib/i18n";
+import type { Dict, Locale } from "@/lib/i18n";
 import { mailLink, waLink } from "@/lib/site";
 import { gsap, MOTION_OK } from "@/lib/gsap";
 import { sendRequest } from "@/lib/sendRequest";
@@ -18,6 +19,19 @@ export async function deliver(payload: FormData): Promise<RequestStatus> {
   } catch {
     return "manual";
   }
+}
+
+/* Shown above each form's submit button. */
+export function Consent({ lang, t }: { lang: Locale; t: Dict["common"]["request"] }) {
+  return (
+    <p className="text-xs text-muted">
+      {t.consent}{" "}
+      <Link href={`/${lang}/privacy`} className="underline underline-offset-2 hover:text-fg">
+        {t.privacyLink}
+      </Link>
+      .
+    </p>
+  );
 }
 
 /* Off-screen field people never see; bots that fill every input give themselves away (checked in sendRequest). */
