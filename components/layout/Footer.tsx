@@ -63,7 +63,12 @@ export function Footer({ lang, t }: { lang: Locale; t: Dict["common"] }) {
         </div>
       </div>
       <div className="border-t border-line">
-        <p className="wrap py-6 text-xs text-muted">numberfirst.pro · {t.footer.rights}</p>
+        <p className="wrap py-6 text-xs text-muted">
+          numberfirst.pro · {t.footer.rights} ·{" "}
+          <Link href={`/${lang}/privacy`} className="underline underline-offset-2 hover:text-fg">
+            {t.footer.privacy}
+          </Link>
+        </p>
       </div>
     </footer>
   );

@@ -34,7 +34,7 @@ export function SampleGallery({ t }: { t: Dict["home"]["sample"] }) {
         <ul className="mt-10 grid gap-5 md:grid-cols-3">
           {samples.map((s, i) => (
             <li key={s.src} data-reveal>
-              <button type="button" onClick={() => show(i)} className="group block w-full text-start" aria-label={`${t.items[i].title}. ${t.open}`}>
+              <button type="button" onClick={() => show(i)} className="group block w-full text-start">
                 <span className="relative block overflow-hidden rounded-2xl border border-line bg-white">
                   <Image
                     src={s.src}
@@ -76,7 +76,7 @@ export function SampleGallery({ t }: { t: Dict["home"]["sample"] }) {
               sizes="94vw"
               className="max-h-[82svh] w-full rounded-2xl bg-white object-contain"
             />
-            <figcaption className="mt-3 text-center text-sm text-fg">{t.items[open].title}</figcaption>
+            <figcaption className="mt-3 text-center text-sm text-white">{t.items[open].title}</figcaption>
             <button
               type="button"
               onClick={() => dialog.current?.close()}

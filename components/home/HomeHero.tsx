@@ -45,7 +45,7 @@ export function HomeHero({ lang, t, common }: { lang: Locale; t: Dict["home"]; c
               alt={t.hero.emblemAlt}
               width={770}
               height={470}
-              priority
+              loading="eager"
               className="h-auto w-full drop-shadow-[0_30px_60px_rgb(240_179_35/0.18)] in-data-[theme=light]:hidden"
             />
             {/* The original emblem has a dark glow baked in, which shows as a dark oval on the light theme.
