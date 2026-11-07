@@ -78,6 +78,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     <html
       lang={lang}
       dir={dirOf(lang)}
+      data-scroll-behavior="smooth"
       className={`${cormorant.variable} ${manrope.variable} ${elMessiri.variable} ${tajawal.variable}`}
       suppressHydrationWarning
     >

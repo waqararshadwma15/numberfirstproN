@@ -63,7 +63,8 @@ export function Footer({ lang, t }: { lang: Locale; t: Dict["common"] }) {
         </div>
       </div>
       <div className="border-t border-line">
-        <p className="wrap py-6 text-xs text-muted">
+        {/* Extra room on phones: at the end of the page the floating WhatsApp button would sit on this line and take its taps. */}
+        <p className="wrap py-6 text-xs text-muted max-sm:pb-24">
           numberfirst.pro · {t.footer.rights} ·{" "}
           <Link href={`/${lang}/privacy`} className="underline underline-offset-2 hover:text-fg">
             {t.footer.privacy}

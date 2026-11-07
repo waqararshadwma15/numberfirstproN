@@ -91,7 +91,7 @@ export function PlanRequest({ lang, t, request }: Props) {
 
   return (
     <section id="plan" className="band relative overflow-hidden bg-surface">
-      <div aria-hidden className="pointer-events-none absolute -bottom-40 start-[-10%] size-[520px] rounded-full bg-teal/10 blur-[140px]" />
+      <div aria-hidden className="glow pointer-events-none absolute -bottom-40 start-[-10%] size-[520px] text-teal/10" />
       <div className="wrap relative grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div className="lg:sticky lg:top-[calc(var(--nav-h)+40px)] lg:self-start">
           <p data-reveal className="eyebrow eyebrow-teal">

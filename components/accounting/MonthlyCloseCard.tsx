@@ -37,7 +37,7 @@ export function MonthlyCloseCard({ t }: { t: Dict["accounting"]["checklist"] }) 
 
   return (
     <div ref={scope} className="card relative overflow-hidden p-6 shadow-2xl shadow-black/40 sm:p-8" aria-hidden>
-      <div aria-hidden className="pointer-events-none absolute -top-24 -end-24 size-64 rounded-full bg-gold/15 blur-3xl" />
+      <div aria-hidden className="glow pointer-events-none absolute -top-24 -end-24 size-64 text-gold/15" />
       <div className="relative flex items-center justify-between gap-4">
         <div>
           <p className="text-xs font-bold tracking-[0.18em] text-gold uppercase rtl:tracking-normal">{t.period}</p>

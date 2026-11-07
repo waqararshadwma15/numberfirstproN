@@ -31,7 +31,8 @@ export function ForecastChart({ t }: { t: Dict["advisory"]["chart"] }) {
           .fromTo(path, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut" }, 0.3)
           .from("[data-dot]", { scale: 0, transformOrigin: "50% 50%", duration: 0.5, ease: "back.out(3)" }, "-=0.2")
           .from("[data-legend]", { autoAlpha: 0, y: 8, stagger: 0.1, duration: 0.6 }, "-=0.4");
-        gsap.to("[data-dot]", { scale: 1.6, autoAlpha: 0.4, repeat: -1, yoyo: true, duration: 1.1, ease: "sine.inOut", delay: 3 });
+        // A few pulses, not an endless loop: an odd repeat ends with the dot back at its normal size.
+        gsap.to("[data-dot]", { scale: 1.6, autoAlpha: 0.4, repeat: 5, yoyo: true, duration: 1.1, ease: "sine.inOut", delay: 3 });
       });
       return () => mm.revert();
     },
@@ -40,7 +41,7 @@ export function ForecastChart({ t }: { t: Dict["advisory"]["chart"] }) {
 
   return (
     <div ref={scope} className="card relative overflow-hidden p-6 shadow-2xl shadow-black/40 sm:p-8" aria-hidden>
-      <div className="pointer-events-none absolute -bottom-24 -start-24 size-64 rounded-full bg-teal/15 blur-3xl" />
+      <div className="glow pointer-events-none absolute -bottom-24 -start-24 size-64 text-teal/15" />
       <div className="relative flex flex-wrap items-center gap-5 text-xs text-muted">
         <span data-legend className="flex items-center gap-2">
           <span className="size-2.5 rounded-sm bg-teal" />
