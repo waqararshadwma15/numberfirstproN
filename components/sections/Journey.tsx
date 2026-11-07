@@ -99,7 +99,8 @@ export function Journey({ label, steps, t, cta, tone, children }: Props) {
           {label}
         </h2>
         {/* Hover pauses the steps being read. The controls stay outside it, or Play would seem to do nothing under the mouse. */}
-        <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+        {/* Real mice only: iPhones fake a hover on tap, and content changing on that hover can swallow the tap. */}
+        <div onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)} onPointerLeave={() => setHover(false)}>
         <div role="tablist" aria-label={label} data-reveal className="relative grid grid-cols-5 gap-1 sm:gap-3">
           <span aria-hidden className="absolute inset-x-[10%] top-[21px] h-px bg-line sm:top-7" />
           {steps.map((s, i) => {
@@ -169,7 +170,7 @@ export function Journey({ label, steps, t, cta, tone, children }: Props) {
                   on ? "visible translate-y-0 opacity-100" : "invisible translate-y-3 opacity-0"
                 }`}
               >
-                <div aria-hidden className={`pointer-events-none absolute -top-24 -end-24 size-64 rounded-full blur-3xl ${gold ? "bg-gold/10" : "bg-teal/10"}`} />
+                <div aria-hidden className={`glow pointer-events-none absolute -top-24 -end-24 size-64 ${gold ? "text-gold/10" : "text-teal/10"}`} />
                 <div className="relative sm:col-span-2 lg:col-span-1">
                   <p className={`eyebrow ${gold ? "" : "eyebrow-teal"}`}>{s.kicker}</p>
                   <h3 className="mt-3 text-[clamp(30px,3.6vw,42px)]">{s.name}</h3>

@@ -22,6 +22,7 @@ export function PathCard({ href, index, title, summary, points, meta, cta, tone,
   const gold = tone === "gold";
 
   const onMove = (e: React.PointerEvent<HTMLAnchorElement>) => {
+    if (e.pointerType !== "mouse") return;
     const el = e.currentTarget;
     const r = el.getBoundingClientRect();
     el.style.setProperty("--x", `${e.clientX - r.left}px`);
@@ -33,8 +34,10 @@ export function PathCard({ href, index, title, summary, points, meta, cta, tone,
       overwrite: "auto",
     });
   };
-  const onLeave = (e: React.PointerEvent<HTMLAnchorElement>) =>
+  const onLeave = (e: React.PointerEvent<HTMLAnchorElement>) => {
+    if (e.pointerType !== "mouse") return;
     gsap.to(e.currentTarget.querySelector("[data-arrow]"), { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.5)" });
+  };
 
   return (
     <Link

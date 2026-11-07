@@ -8,8 +8,8 @@ export function HomeHero({ lang, t, common }: { lang: Locale; t: Dict["home"]; c
   return (
     <section className="relative overflow-hidden pt-[calc(var(--nav-h)+20px)] pb-12 md:pt-[calc(var(--nav-h)+36px)] md:pb-16">
       <div aria-hidden className="grid-lines pointer-events-none absolute inset-0" />
-      <div aria-hidden className="pointer-events-none absolute -top-32 start-[8%] size-[480px] rounded-full bg-gold/10 blur-[120px]" />
-      <div aria-hidden className="pointer-events-none absolute top-40 end-[4%] size-[420px] rounded-full bg-teal/10 blur-[120px]" />
+      <div aria-hidden className="glow pointer-events-none absolute -top-32 start-[8%] size-[480px] text-gold/10" />
+      <div aria-hidden className="glow pointer-events-none absolute top-40 end-[4%] size-[420px] text-teal/10" />
 
       <div className="wrap relative">
         <div className="grid items-center gap-10 lg:grid-cols-[1.25fr_1fr]">

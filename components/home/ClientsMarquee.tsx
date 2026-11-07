@@ -13,10 +13,12 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
   const rows = [clients.slice(0, 6), clients.slice(6)];
   const tweens = useRef<gsap.core.Tween[]>([]);
   const [paused, setPaused] = useState(false);
+  const userPaused = useRef(false);
 
   const togglePause = () => {
     const next = !paused;
     setPaused(next);
+    userPaused.current = next;
     tweens.current.forEach((tween) => tween.paused(next));
   };
 
@@ -35,7 +37,9 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
           );
           tweens.current[i] = tween;
           const row = track.parentElement!;
-          const slow = () => gsap.to(tween, { timeScale: 0.15, duration: 0.6 });
+          const slow = (e: PointerEvent) => {
+            if (e.pointerType === "mouse") gsap.to(tween, { timeScale: 0.15, duration: 0.6 });
+          };
           const resume = () => gsap.to(tween, { timeScale: 1, duration: 0.6 });
           row.addEventListener("pointerenter", slow);
           row.addEventListener("pointerleave", resume);
@@ -44,6 +48,12 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
             row.removeEventListener("pointerleave", resume);
           });
         });
+        // No drifting while off screen, unless the visitor's own Pause already stopped it.
+        const onScreen = new IntersectionObserver(([entry]) => {
+          tweens.current.forEach((tween) => tween.paused(!entry.isIntersecting || userPaused.current));
+        });
+        onScreen.observe(scope.current!);
+        cleanups.push(() => onScreen.disconnect());
         return () => cleanups.forEach((fn) => fn());
       });
       return () => mm.revert();
@@ -68,7 +78,10 @@ export function ClientsMarquee({ t }: { t: Dict["home"]["clients"] }) {
         </div>
       </div>
 
-      <div className="mt-10 grid gap-5 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]" dir="ltr">
+      <div className="relative mt-10 grid gap-5" dir="ltr">
+        {/* Edge fades as overlays in the section's colour, not a mask: a moving mask is slow to draw in Safari. */}
+        <span aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 w-[8%] bg-linear-to-r from-paper to-transparent" />
+        <span aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[8%] bg-linear-to-l from-paper to-transparent" />
         {rows.map((row, r) => (
           <div key={r} className="flex overflow-hidden">
             {/* Under reduced motion nothing drifts, so the logos wrap to keep every one of them on screen. */}

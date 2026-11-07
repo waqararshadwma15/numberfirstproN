@@ -23,11 +23,11 @@ export function CtaBand({ lang, common, title, lead, path }: Props) {
           data-reveal="scale"
           className="grain relative overflow-hidden rounded-[32px] border border-line bg-surface px-6 py-12 sm:px-12 md:py-16"
         >
+          <div aria-hidden className="grid-lines pointer-events-none absolute inset-0" />
           <div
             aria-hidden
-            className={`pointer-events-none absolute -top-40 -end-40 size-[520px] rounded-full blur-3xl ${teal ? "bg-teal/20" : "bg-gold/20"}`}
+            className={`glow pointer-events-none absolute -top-40 -end-40 size-[520px] ${teal ? "text-teal/20" : "text-gold/20"}`}
           />
-          <div aria-hidden className="grid-lines pointer-events-none absolute inset-0" />
           <div className="relative grid items-end gap-10 lg:grid-cols-[1.3fr_1fr]">
             <div>
               <h2 id="cta-title" className="text-[clamp(36px,5.5vw,64px)]">

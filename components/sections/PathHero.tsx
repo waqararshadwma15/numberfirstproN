@@ -21,7 +21,7 @@ export function PathHero({ index, label, lines, lead, tone, primary, secondary, 
       <div aria-hidden className="grid-lines pointer-events-none absolute inset-0" />
       <div
         aria-hidden
-        className={`pointer-events-none absolute -top-40 end-[-10%] size-[620px] rounded-full blur-[140px] ${gold ? "bg-gold/12" : "bg-teal/14"}`}
+        className={`glow pointer-events-none absolute -top-40 end-[-10%] size-[620px] ${gold ? "text-gold/12" : "text-teal/14"}`}
       />
       <div className="wrap relative grid items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
         <div>

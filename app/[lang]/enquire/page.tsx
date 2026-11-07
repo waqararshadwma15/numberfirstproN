@@ -25,7 +25,7 @@ export default async function EnquirePage({ params }: PageProps<"/[lang]/enquire
   return (
     <section className="relative overflow-hidden pt-[calc(var(--nav-h)+20px)] pb-16 md:pt-[calc(var(--nav-h)+36px)]">
       <div aria-hidden className="grid-lines pointer-events-none absolute inset-0" />
-      <div aria-hidden className="pointer-events-none absolute -top-40 start-[-10%] size-[560px] rounded-full bg-gold/10 blur-[140px]" />
+      <div aria-hidden className="glow pointer-events-none absolute -top-40 start-[-10%] size-[560px] text-gold/10" />
       <div className="wrap relative grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
         <div className="lg:sticky lg:top-[calc(var(--nav-h)+40px)] lg:self-start">
           <h1>

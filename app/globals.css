@@ -332,11 +332,27 @@
   }
 
   .grid-lines {
+    /* The fade is a layer in the section's own colour, not a mask: masks are slow to draw in Safari. */
+    --fade: var(--color-ink);
     background-image:
+      radial-gradient(ellipse at 50% 30%, transparent 30%, var(--fade) 75%),
       linear-gradient(to right, color-mix(in srgb, var(--tint) 4%, transparent) 1px, transparent 1px),
       linear-gradient(to bottom, color-mix(in srgb, var(--tint) 4%, transparent) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%);
+    background-size:
+      100% 100%,
+      64px 64px,
+      64px 64px;
+  }
+  .grain .grid-lines {
+    --fade: var(--color-surface);
+  }
+
+  /* A soft glow in the current text colour. A gradient, not filter: blur, which is slow to draw in Safari. */
+  .glow::before {
+    content: "";
+    position: absolute;
+    inset: -25%;
+    background: radial-gradient(closest-side, currentColor, transparent);
   }
 
   .field {

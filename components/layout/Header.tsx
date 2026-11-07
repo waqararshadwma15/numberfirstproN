@@ -18,6 +18,13 @@ export function Header({ lang, t }: Props) {
   const panel = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
+  // Back/Forward changes the page without tapping a menu link: don't leave the menu open over the new page.
+  const [menuPath, setMenuPath] = useState(pathname);
+  if (menuPath !== pathname) {
+    setMenuPath(pathname);
+    setOpen(false);
+  }
+
   const other: Locale = lang === "ar" ? "en" : "ar";
   const switchHref = pathname.replace(/^\/(en|ar)(?=\/|$)/, `/${other}`);
   const rest = pathname.replace(/^\/(en|ar)/, "") || "/";
@@ -35,14 +42,19 @@ export function Header({ lang, t }: Props) {
       const el = header.current!;
       const bar = el.querySelector<HTMLElement>("[data-progress]")!;
       const reduced = window.matchMedia(REDUCED).matches;
+      let hidden = false;
       const st = ScrollTrigger.create({
         start: 0,
         end: "max",
         onUpdate(self) {
-          el.dataset.scrolled = self.scroll() > 12 ? "true" : "false";
+          const scrolled = self.scroll() > 12 ? "true" : "false";
+          if (el.dataset.scrolled !== scrolled) el.dataset.scrolled = scrolled;
           gsap.set(bar, { scaleX: self.progress });
           if (reduced) return;
           const hide = self.direction === 1 && self.scroll() > 320 && !el.dataset.open;
+          // Only when it changes: this runs on every scroll event.
+          if (hide === hidden) return;
+          hidden = hide;
           gsap.to(el, { yPercent: hide ? -100 : 0, duration: 0.45, ease: "power3.out", overwrite: "auto" });
         },
       });
@@ -56,11 +68,15 @@ export function Header({ lang, t }: Props) {
     () => {
       const p = panel.current;
       if (!p) return;
+      const items = p.querySelectorAll("[data-item]");
+      // A close still running would finish after this open and hide the menu, leaving the page scroll-locked.
+      gsap.killTweensOf([p, ...items]);
       if (open) {
         gsap.set(p, { display: "flex" });
         gsap.fromTo(p, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.6, ease: "expo.out" });
-        gsap.fromTo(p.querySelectorAll("[data-item]"), { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.06, delay: 0.12, duration: 0.6 });
-      } else {
+        gsap.fromTo(items, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.06, delay: 0.12, duration: 0.6 });
+      } else if (p.style.display === "flex") {
+        // Skipped on first render, when there is nothing to close.
         gsap.to(p, { clipPath: "inset(0 0 100% 0)", duration: 0.4, ease: "expo.in", onComplete: () => gsap.set(p, { display: "none" }) });
       }
     },
@@ -94,7 +110,7 @@ export function Header({ lang, t }: Props) {
     <header
       ref={header}
       data-scrolled="false"
-      className="group/h fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300 data-[scrolled=true]:border-line data-[scrolled=true]:bg-ink/85 data-[scrolled=true]:backdrop-blur-xl"
+      className="group/h fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color] duration-300 data-[scrolled=true]:border-line data-[scrolled=true]:bg-ink"
     >
       <div className="wrap flex h-[var(--nav-h)] items-center gap-2 sm:gap-4">
         <Link href={`/${lang}`} className="flex min-w-0 items-center gap-3 me-auto lg:me-0" aria-label={`${t.brand} — ${t.nav.home}`}>
@@ -151,7 +167,7 @@ export function Header({ lang, t }: Props) {
       <div
         ref={panel}
         id="mobile-menu"
-        /* An explicit height, not bottom-0: once scrolled, the header's blur and transform make it this panel's
+        /* An explicit height, not bottom-0: once scrolled, the header's transform makes it this panel's
            containing block, so bottom-0 would collapse the panel to the height of the header. */
         className="fixed inset-x-0 top-[var(--nav-h)] hidden h-[calc(100dvh-var(--nav-h))] flex-col gap-2 overflow-y-auto bg-ink px-4 pt-6 pb-10 lg:hidden"
         style={{ clipPath: "inset(0 0 100% 0)" }}
